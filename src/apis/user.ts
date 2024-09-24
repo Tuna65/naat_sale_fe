@@ -1,9 +1,10 @@
 import { ResPagination } from "@/models";
+import { IUser } from "@/models/user";
 
 import { message } from "antd";
 import axiosInstance from "./restclient";
 
-const path = `/user` as const;
+const path = `/sale-user` as const;
 
 export const userApi = {
   async find(params?: any): Promise<ResPagination<any> | any> {
@@ -15,7 +16,7 @@ export const userApi = {
     }
   },
 
-  async create(body: any): Promise<any | any> {
+  async create(body: IUser): Promise<any | any> {
     try {
       const res = await axiosInstance.post(`${path}`, body);
       if (res.data.code) throw Error(res.data.message);
@@ -45,25 +46,16 @@ export const userApi = {
     }
   },
 
-  async detail(
-    id: string,
-    businessId?: string,
-    shopId?: string
-  ): Promise<any | any> {
+  async detail(id: string, businessId?: string, shopId?: string): Promise<any | any> {
     try {
-      const res = await axiosInstance.get(
-        `${path}/${id}?businessId=${businessId}&shopId=${shopId}`
-      );
+      const res = await axiosInstance.get(`${path}/${id}?businessId=${businessId}&shopId=${shopId}`);
       return res.data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);
     }
   },
 
-  async detailByToken(
-    businessId?: string,
-    shopId?: string
-  ): Promise<any | any> {
+  async detailByToken(businessId?: string, shopId?: string): Promise<any | any> {
     try {
       const res = await axiosInstance.get(`${path}/me`, {
         params: { businessId, shopId },

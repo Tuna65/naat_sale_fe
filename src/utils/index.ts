@@ -1,3 +1,5 @@
+import { IBaseLoading } from "@/types";
+
 export const configAntdProvider = {
   token: {
     colorPrimary: "#5932EA",
@@ -15,4 +17,11 @@ export const defaultResPage = {
     totalItems: 18,
     totalPages: 1,
   },
+};
+
+export const baseLoading: IBaseLoading = {
+  create: false,
+  delete: false,
+  edit: false,
+  find: false,
 };

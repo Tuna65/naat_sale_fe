@@ -11,5 +11,11 @@ export interface IUser extends IBaseEntity {
 
   phone: string;
 
+  shopId: string;
+
   image: string;
+
+  // role?: Role;
+
+  roleId?: string;
 }

@@ -1,8 +1,11 @@
 export const PATHNAME = {
   HOME: "/home",
   DASHBOARD: "/dashboard",
-  LOGIN: "/login",
   COMMING_SOON: "/comming-soon",
+  AUTH: {
+    LOGIN: "/login",
+    REGISTER: "/register",
+  },
   ORDER: {
     INDEX: "/order",
     CREATE: "/order/create",

@@ -22,6 +22,8 @@ export const Dashboard = () => LazyLayout(() => import("./dashboard"));
 export const Product = () => LazyLayout(() => import("./product"));
 export const Order = () => LazyLayout(() => import("./order"));
 export const Users = () => LazyLayout(() => import("./user"));
+export const Login = () => LazyLayout(() => import("./auth/Login"));
+export const Register = () => LazyLayout(() => import("./auth/Register"));
 
 export const routerList: TRouterList[] = [
   {

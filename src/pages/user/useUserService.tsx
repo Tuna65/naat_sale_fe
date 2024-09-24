@@ -1,8 +1,12 @@
+import { userApi } from "@/apis/user";
 import Text from "@/components/Text";
 import { IUser } from "@/models/user";
+import { IBaseLoading } from "@/types";
+import { baseLoading } from "@/utils";
 import { func } from "@/utils/func";
 import { EditOutlined } from "@ant-design/icons";
-import { Avatar, Button, Flex } from "antd";
+import { Avatar, Button, Flex, message } from "antd";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const useUserService = () => {
@@ -15,8 +19,7 @@ const useUserService = () => {
       },
       {
         pattern: /^[a-z0-9._]+$/,
-        message:
-          'Username chỉ chứa chữ thường và ký tự đặc biệt là "." hoặc "_"',
+        message: 'Username chỉ chứa chữ thường và ký tự đặc biệt là "." hoặc "_"',
       },
     ],
     password: [
@@ -78,7 +81,23 @@ const useUserService = () => {
       ),
     },
   ];
-  return { columns, rulesForm };
+
+  const [loading, setLoading] = useState<IBaseLoading>(baseLoading);
+
+  const create = async (body: IUser) => {
+    setLoading((prev) => ({ ...prev, create: true }));
+    try {
+      setLoading((prev) => ({ ...prev, create: true }));
+      const res = await userApi.create(body);
+      if (res) {
+        message.success("Thêm mới nhân viên thành công");
+      }
+      setLoading((prev) => ({ ...prev, create: false }));
+    } catch (error) {
+      setLoading((prev) => ({ ...prev, create: false }));
+    }
+  };
+  return { columns, rulesForm, loading, create };
 };
 
 export default useUserService;
