@@ -6,7 +6,7 @@ export type language = {
 };
 
 const initialState = {
-  type: 'en',
+  type: 'vi',
 };
 
 const { actions, reducer: languageReducer } = createSlice({
@@ -16,7 +16,7 @@ const { actions, reducer: languageReducer } = createSlice({
     setLanguage(state, action: PayloadAction<'vi' | 'en'>) {
       state.type = action.payload;
       // document.cookie = `${}=${JSON.stringify(action.payload ?? 'vi')}`;
-      localStorage.setItem('SAFFIA_LANGUAGE_KEY', action.payload ?? 'en');
+      localStorage.setItem('SAFFIA_LANGUAGE_KEY', action.payload ?? 'vi');
       i18next.changeLanguage(action.payload);
     },
     clear() {

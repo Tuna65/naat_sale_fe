@@ -19,11 +19,11 @@ const Header = (props: Props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
-    cookieStorageUtil.remove(STORAGE.PAT_TOKEN_KEY);
+    cookieStorageUtil.remove(STORAGE.NAAT_TOKEN_KEY);
     dispatch(authActions.clear());
-    return navigate(PATHNAME.LOGIN);
+    return navigate(PATHNAME.AUTH.LOGIN);
   };
 
   const items: MenuProps["items"] = [
@@ -52,11 +52,7 @@ const Header = (props: Props) => {
                 <IconBell />
               </div>
             </Tooltip>
-            <Dropdown
-              menu={{ items }}
-              placement="bottom"
-              arrow={{ pointAtCenter: true }}
-            >
+            <Dropdown menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
               <Image
                 className="rounded-lg cursor-pointer"
                 width={48}

@@ -23,6 +23,12 @@ const useAuthService = () => {
         message: 'Username chỉ chứa chữ thường và ký tự đặc biệt là "." hoặc "_"',
       },
     ],
+    email: [
+      {
+        required: true,
+        message: t("Email không được để trống"),
+      },
+    ],
     password: [
       {
         required: true,

@@ -28,8 +28,8 @@ const Register = (props: IRegisterProps) => {
         <Form.Item label={t("Fullname")} name="fullname">
           <Input placeholder={t("Fullname")} />
         </Form.Item>{" "}
-        <Form.Item label={t("Username")} name="username" rules={rulesForm.username}>
-          <Input placeholder={t("Username")} />
+        <Form.Item label={t("Email")} name="email" rules={rulesForm.email}>
+          <Input placeholder={t("Email")} type="email" />
         </Form.Item>
         <Form.Item label={t("Password")} name="password" rules={rulesForm.password}>
           <Input placeholder={t("Password")} type="password" />
@@ -37,9 +37,6 @@ const Register = (props: IRegisterProps) => {
         <Form.Item label={t("Phone")} name="phone">
           <Input placeholder={t("Phone")} />
         </Form.Item>{" "}
-        <Form.Item label={t("Email")} name="email">
-          <Input placeholder={t("Email")} />
-        </Form.Item>
       </Form>
       <Flex align="center" gap={20}>
         <Button

@@ -2,7 +2,7 @@ import { message } from "antd";
 import axiosInstance from "./restclient";
 import { BodySaleLogin } from "@/types/auth";
 
-const path = `/auth/sale-login` as const;
+const path = `/auth-shop/login` as const;
 
 export const authSaleApi = {
   async login(body: BodySaleLogin) {
