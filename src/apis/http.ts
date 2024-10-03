@@ -3,7 +3,7 @@ import { BASE_URL } from "../utils/env";
 import { STORAGE } from "../configs/storage";
 import { cookieStorageUtil } from "../service/storage";
 
-const axiosInstance = axios.create({
+const http = axios.create({
   baseURL: BASE_URL,
   headers: {
     // 'Accept-Language': localStorageUtil.get(IVIWORK_LANGUAGE_KEY)
@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.response.use(
+http.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -22,23 +22,23 @@ axiosInstance.interceptors.response.use(
     if (
       (error.response?.status === 403 || error.response?.status === 401) &&
       !!!originalRequest._retry &&
-      cookieStorageUtil.get(STORAGE.PAT_TOKEN_KEY)
+      cookieStorageUtil.get(STORAGE.NAAT_TOKEN_KEY)
     ) {
       originalRequest._retry = true;
       try {
-        return axiosInstance(originalRequest);
+        return http(originalRequest);
       } catch (error) {
-        cookieStorageUtil.remove(STORAGE.PAT_TOKEN_KEY);
+        cookieStorageUtil.remove(STORAGE.NAAT_TOKEN_KEY);
       }
     }
     return Promise.reject(error?.response);
   }
 );
 
-axiosInstance.interceptors.request.use(
+http.interceptors.request.use(
   (config) => {
     config.headers.Authorization = `Bearer ${cookieStorageUtil.get(
-      STORAGE.PAT_TOKEN_KEY
+      STORAGE.NAAT_TOKEN_KEY
     )}`;
     return config;
   },
@@ -47,4 +47,4 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-export default axiosInstance;
+export default http;

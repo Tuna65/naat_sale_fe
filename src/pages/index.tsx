@@ -24,6 +24,8 @@ export const Order = () => LazyLayout(() => import("./order"));
 export const Users = () => LazyLayout(() => import("./user"));
 export const Login = () => LazyLayout(() => import("./auth/Login"));
 export const Register = () => LazyLayout(() => import("./auth/Register"));
+export const CreateShop = () => LazyLayout(() => import("./shop/CreateShop"));
+export const Shop = () => LazyLayout(() => import("./shop"));
 
 export const routerList: TRouterList[] = [
   {

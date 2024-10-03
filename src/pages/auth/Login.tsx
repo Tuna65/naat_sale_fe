@@ -27,8 +27,8 @@ const Login = (props: ILoginProps) => {
           remember: true,
         }}
       >
-        <Form.Item label={t("Email")} name="email" rules={rulesForm.username}>
-          <Input placeholder={t("Email")} />
+        <Form.Item label={t("Username")} name="username" rules={rulesForm.username}>
+          <Input placeholder={t("Username")} />
         </Form.Item>
         <Form.Item label={t("Password")} name="password" rules={rulesForm.password}>
           <Input placeholder={t("Password")} type="password" />

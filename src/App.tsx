@@ -5,9 +5,10 @@ import ProtectedRoute from "./layout/ProtectedRoute";
 import LoginLayout from "./pages/auth";
 import { configAntdProvider } from "./utils";
 import { ConfigProvider } from "antd";
-import { Login, Register, routerList } from "./pages";
+import { Login, Register, Shop, routerList } from "./pages";
 import { PATHNAME } from "./utils/Pathname";
 import ComingSoon from "./components/ComingSoon";
+import CreateShop from "./pages/shop/CreateShop";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
             <Route path={PATHNAME.AUTH.LOGIN} element={<Login />} />
             <Route path={PATHNAME.AUTH.REGISTER} element={<Register />} />
           </Route>
+          <Route path={PATHNAME.SHOP.CREATE} element={<CreateShop />} />
+          <Route path={PATHNAME.SHOP.INDEX} element={<Shop />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
               {routerList.map((r, index) => {

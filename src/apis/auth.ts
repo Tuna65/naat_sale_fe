@@ -1,5 +1,5 @@
 import { message } from "antd";
-import axiosInstance from "./restclient";
+import http from "./http";
 import { BodySaleLogin } from "@/types/auth";
 
 const path = `/auth-shop/login` as const;
@@ -7,7 +7,7 @@ const path = `/auth-shop/login` as const;
 export const authSaleApi = {
   async login(body: BodySaleLogin) {
     try {
-      const res = await axiosInstance.post(`${path}`, body);
+      const res = await http.post(`${path}`, body);
       return res.data;
     } catch (error: any) {
       console.log(error);

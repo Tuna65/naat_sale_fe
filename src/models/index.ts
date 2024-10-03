@@ -30,9 +30,8 @@ export type VoidFunc = () => void;
 export type SuccessFunc<T> = (value: T) => void;
 
 export interface IBaseEntity {
-  id: string;
+  id?: string;
   createdAt?: string;
   updateAt?: string;
-  status?: string;
   createdBy?: string;
 }

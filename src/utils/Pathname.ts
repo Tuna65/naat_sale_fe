@@ -12,6 +12,12 @@ export const PATHNAME = {
     DETAIL: "/order/:id",
     EDIT: "/order/edit/:id",
   },
+  SHOP: {
+    INDEX: "/shop",
+    CREATE: "/shop/create",
+    DETAIL: "/shop/:id",
+    EDIT: "/shop/edit/:id",
+  },
   PRODUCT: {
     INDEX: "/product",
     CREATE: "/product/create",

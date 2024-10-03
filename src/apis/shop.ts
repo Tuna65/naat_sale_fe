@@ -1,13 +1,14 @@
 import { ResPagination } from "@/models";
-import { IUser } from "@/models/user";
+import { IShop } from "@/models/shop";
+import { QueryShop } from "@/types/shop";
 
 import { message } from "antd";
 import http from "./http";
 
-const path = `/account` as const;
+const path = `/shop` as const;
 
-export const userApi = {
-  async find(params?: any): Promise<ResPagination<any> | any> {
+export const shopApi = {
+  async find(params?: QueryShop): Promise<ResPagination<any> | any> {
     try {
       const res = await http.get(`${path}`, { params });
       return res.data;
@@ -16,7 +17,7 @@ export const userApi = {
     }
   },
 
-  async create(body: IUser): Promise<any | any> {
+  async create(body: IShop): Promise<any | any> {
     try {
       const res = await http.post(`${path}`, body);
       if (res.data.code) throw Error(res.data.message);

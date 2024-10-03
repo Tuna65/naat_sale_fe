@@ -4,3 +4,8 @@ export interface IBaseLoading {
   find: boolean;
   delete: boolean;
 }
+
+export interface IBasePagination {
+  page: number;
+  limit: number;
+}
