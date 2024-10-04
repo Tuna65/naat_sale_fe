@@ -11,6 +11,11 @@ export const func = {
     return `https://ui-avatars.com/api/?name=${name}`;
   },
 
+  avatar: (name?: any, url?: string) => {
+    if (url) return url;
+    return `https://ui-avatars.com/api/?name=${name}`;
+  },
+
   checkNullish: (data?: any) => {
     if (!data || (typeof data == "string" && data == "") || data == undefined) return null;
     return data;

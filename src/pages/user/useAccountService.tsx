@@ -1,7 +1,7 @@
 import { accountApi } from "@/apis/account";
 import Text from "@/components/Text";
 import { STORAGE } from "@/configs/storage";
-import { ResPagination, SuccessFunc } from "@/models";
+import { ResPagination } from "@/models";
 import { IRole } from "@/models/role";
 import { IUser } from "@/models/user";
 import { cookieStorageUtil } from "@/service/storage";
@@ -115,11 +115,12 @@ const useAccountService = () => {
   const detailToken = async () => {
     try {
       const res = await accountApi.detailByToken();
-      dispatch(authActions.setUser(res));
+      if (res) dispatch(authActions.setUser(res));
     } catch (error) {
       navigate(PATHNAME.AUTH.LOGIN);
       dispatch(authActions.clear());
       cookieStorageUtil.remove(STORAGE.NAAT_TOKEN_KEY);
+      message.error('Token hết hạn hoặc không hợp lệ')
     }
   };
 

@@ -2,7 +2,7 @@ import { IBaseEntity } from ".";
 import { IRole } from "./role";
 
 export interface IUser extends IBaseEntity {
-  fullname: string;
+  name: string;
 
   username: string;
 

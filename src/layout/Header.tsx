@@ -4,21 +4,21 @@ import { STORAGE } from "@/configs/storage";
 import { useTitle } from "@/hooks/useTitle";
 import { cookieStorageUtil } from "@/service/storage";
 import { authActions } from "@/store/modules/auth";
+import { userSelector } from "@/store/modules/auth/selector";
 import { PATHNAME } from "@/utils/Pathname";
 import { func } from "@/utils/func";
 import { Dropdown, Flex, Image, MenuProps, Tooltip } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   const { title } = useTitle();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const account = useSelector(userSelector);
 
   const handleLogout = () => {
     cookieStorageUtil.remove(STORAGE.NAAT_TOKEN_KEY);
@@ -29,7 +29,7 @@ const Header = (props: Props) => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Text type="BODY">{t("Info")}</Text>,
+      label: <Text type="BODY">{account?.name}</Text>,
     },
     {
       key: "2",
@@ -57,7 +57,7 @@ const Header = (props: Props) => {
                 className="rounded-lg cursor-pointer"
                 width={40}
                 height={40}
-                src={func.defaultAvatar("Tuan")}
+                src={func.avatar(account?.name, account?.image)}
                 preview={false}
               />
             </Dropdown>
