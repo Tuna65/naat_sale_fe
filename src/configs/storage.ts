@@ -1,0 +1,4 @@
+export const STORAGE = {
+  NAAT_TOKEN_KEY: 'NAAT_TOKEN_KEY',
+  NAAT_USER_ID: 'NAAT_USER_ID',
+};
