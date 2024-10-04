@@ -6,23 +6,41 @@ import { defaultResPage } from "@/utils";
 import { Button, Flex } from "antd";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import useUserService from "./useUserService";
+import useUserService from "./useAccountService";
+import { useSearchQuery } from "@/hooks/useQuery";
+import { IQueryAccount } from "@/types/account";
+import { useNavigate } from "react-router-dom";
+import { PATHNAME } from "@/utils/Pathname";
 
 type Props = {};
 
 const Users = (props: Props) => {
   const { t } = useTranslation();
-  useTitle(t("Users"));
-  const { columns } = useUserService();
+  useTitle(t("Quản lý nhân viên"));
+  const navigate = useNavigate();
+  const { params, onParams } = useSearchQuery();
+  const { columns, findAccount } = useUserService();
 
   const [data, setData] = useState<ResPagination<any>>(defaultResPage);
 
+  useEffect(() => {
+    if (!params.page) {
+      onParams({ page: 1, limit: 20 });
+    }
+  }, []);
+
+  useEffect(() => {
+    const query: IQueryAccount = { page: params.page?.toString(), limit: params.limit?.toString() };
+    params.page && findAccount(query, (v) => setData(v));
+  }, [params]);
+  console.log(params);
+
   return (
-    <Flex vertical gap={32} className="p-6 bg-white rounded-lg">
+    <Flex vertical gap={20} className=" rounded-lg">
       <Flex className="" justify="space-between">
-        <SearchBox onChange={(v) => {}} value="" />
-        <Button type="primary" size="large">
-          {t("Create User")}
+        <SearchBox onChange={(v) => {}} value="" className="" />
+        <Button type="primary" size="large" onClick={() => navigate(PATHNAME.USER.CREATE)}>
+          {t("Thêm mới")}
         </Button>
       </Flex>
 

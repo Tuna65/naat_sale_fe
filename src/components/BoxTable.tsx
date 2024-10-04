@@ -30,7 +30,7 @@ const BoxTable = (props: ITableProps) => {
   };
   return (
     <div>
-      <div className="border border-solid border-black border-opacity-10 rounded-lg overflow-hidden">
+      <div className="border shadow-box border-solid border-black border-opacity-10 rounded-lg overflow-hidden">
         <Container type="TABLE" isLoading={isLoading}>
           {!isSelectRow ? (
             <TableAntd

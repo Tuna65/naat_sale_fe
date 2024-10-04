@@ -1,16 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from "@/models/user";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AuthState = {
-  user?: any;
+  user?: IUser;
   title?: string;
 };
 
 const initialState: AuthState = {
-  title: '',
+  title: "",
 };
 
 const { actions, reducer: authReducer } = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     transferTitle(state, action: PayloadAction<string>) {

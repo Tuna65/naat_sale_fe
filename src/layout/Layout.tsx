@@ -1,9 +1,4 @@
-import {
-  IconAccount,
-  IconOrder,
-  IconPieChart,
-  IconProduct,
-} from "@/assets/Icon";
+import { IconAccount, IconOrder, IconPieChart, IconProduct } from "@/assets/Icon";
 import Text from "@/components/Text";
 import { PATHNAME } from "@/utils/Pathname";
 import { Flex, Layout as LayoutAnt, Menu, MenuProps } from "antd";
@@ -11,11 +6,9 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
 
-const { Content, Footer, Sider } = LayoutAnt;
+const { Sider } = LayoutAnt;
 
-interface Props {}
-
-const Layout = (props: Props) => {
+const Layout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -31,7 +24,7 @@ const Layout = (props: Props) => {
   return (
     <div>
       <Flex>
-        <Sider width={270}>
+        <Sider width={270} className="border-0 border-r border-black border-opacity-10 border-solid ">
           <Flex className="py-7 px-12" justify="start" align="center">
             <Text type="TITLE1" className="text-primary">
               NhimStore
@@ -49,11 +42,11 @@ const Layout = (props: Props) => {
           />
         </Sider>
         <div className="flex-1 h-[100vh] overflow-hidden">
-          <div className="shadow-bottom">
+          <div className="shadow-bottom relative z-10">
             <Header />
           </div>
 
-          <div className="bg-gray-100 h-[calc(100vh-88px)] p-8 overflow-y-auto">
+          <div className="bg-[#fafafa] h-[calc(100vh-88px)] p-6 overflow-y-auto relative z-0">
             <Outlet />
           </div>
         </div>

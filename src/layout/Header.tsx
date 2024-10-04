@@ -29,12 +29,12 @@ const Header = (props: Props) => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Text type="CAPTION2">{t("Info")}</Text>,
+      label: <Text type="BODY">{t("Info")}</Text>,
     },
     {
       key: "2",
       label: (
-        <Text onClick={handleLogout} type="CAPTION2">
+        <Text onClick={handleLogout} type="BODY">
           {t("Logout")}
         </Text>
       ),
@@ -52,11 +52,11 @@ const Header = (props: Props) => {
                 <IconBell />
               </div>
             </Tooltip>
-            <Dropdown menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
+            <Dropdown menu={{ items }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
               <Image
                 className="rounded-lg cursor-pointer"
-                width={48}
-                height={48}
+                width={40}
+                height={40}
                 src={func.defaultAvatar("Tuan")}
                 preview={false}
               />

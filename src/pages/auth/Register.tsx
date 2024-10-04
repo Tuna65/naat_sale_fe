@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import useAuthService from "./useAuthService";
 import { useNavigate } from "react-router-dom";
 import { PATHNAME } from "@/utils/Pathname";
-import useUserService from "../user/useUserService";
+import useUserService from "../user/useAccountService";
 interface IRegisterProps {}
 
 const Register = (props: IRegisterProps) => {

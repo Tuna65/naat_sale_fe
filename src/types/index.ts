@@ -6,6 +6,6 @@ export interface IBaseLoading {
 }
 
 export interface IBasePagination {
-  page: number;
-  limit: number;
+  page?: string;
+  limit?: string;
 }

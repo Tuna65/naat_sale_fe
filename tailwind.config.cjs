@@ -34,7 +34,7 @@ module.exports = {
       sm: "0px 1px 0px 0px rgba(0, 0, 0, 0.16), 0px 1px 1px 0px rgba(0, 0, 0, 0.12)",
       xs: "0px 2px 0px 0px rgba(0, 0, 0, 0.02)",
       card: "0 2rem 3rem rgba(132, 139, 200, 0.18)",
-      bottom: "0px 3px 6px #00000029",
+      bottom: "0px 4px 4px 0px #00000026",
     },
   },
   corePlugins: {

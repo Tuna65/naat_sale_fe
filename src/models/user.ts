@@ -1,4 +1,5 @@
 import { IBaseEntity } from ".";
+import { IRole } from "./role";
 
 export interface IUser extends IBaseEntity {
   fullname: string;
@@ -15,7 +16,9 @@ export interface IUser extends IBaseEntity {
 
   image: string;
 
-  // role?: Role;
+  role?: IRole;
 
   roleId?: string;
+
+  isOwner: boolean;
 }
