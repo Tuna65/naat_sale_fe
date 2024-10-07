@@ -4,6 +4,7 @@ import { cookieStorageUtil } from "@/service/storage";
 import { authActions } from "@/store/modules/auth";
 import { BodySaleLogin } from "@/types/auth";
 import { PATHNAME } from "@/utils/Pathname";
+import { func } from "@/utils/func";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -44,6 +45,7 @@ const useAuthService = () => {
 
   const login = async (body: BodySaleLogin) => {
     setLoading(true);
+    body.shopAlias = func.getStoreAliasFromHostname();
     try {
       const res = await authSaleApi.login(body);
       if (res) {

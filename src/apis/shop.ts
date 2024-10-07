@@ -1,6 +1,6 @@
 import { ResPagination } from "@/models";
 import { IShop } from "@/models/shop";
-import { QueryShop } from "@/types/shop";
+import { QueryShop, BodyUpPackage } from "@/types/shop";
 
 import { message } from "antd";
 import http from "./http";
@@ -27,9 +27,19 @@ export const shopApi = {
     }
   },
 
-  async update(body: any, id: string): Promise<any | any> {
+  async edit(body: any, id: string): Promise<any | any> {
     try {
       const res = await http.put(`${path}/${id}`, body);
+      if (res.data.code) throw Error(res.data.message);
+      return res.data;
+    } catch (error: any) {
+      message.error(error?.data?.message ?? error?.data?.message[0]);
+    }
+  },
+
+  async upPackage(body: BodyUpPackage): Promise<any | any> {
+    try {
+      const res = await http.put(`${path}-up-package`, body);
       if (res.data.code) throw Error(res.data.message);
       return res.data;
     } catch (error: any) {
@@ -47,9 +57,9 @@ export const shopApi = {
     }
   },
 
-  async detail(id: string, businessId?: string, shopId?: string): Promise<any | any> {
+  async detail(id: string): Promise<any | any> {
     try {
-      const res = await http.get(`${path}/${id}?businessId=${businessId}&shopId=${shopId}`);
+      const res = await http.get(`${path}/${id}`);
       return res.data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);

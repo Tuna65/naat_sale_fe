@@ -2,6 +2,7 @@ import { GetProp, Upload, UploadFile, UploadProps, message } from "antd";
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import Text from "./Text";
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 type Props = {
@@ -83,17 +84,15 @@ const UploadFiles = (props: Props) => {
         {link.length == 0 && (
           <button style={{ border: 0, background: "none" }} type="button">
             <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
+            <Text type="BODY">{t("Upload")}</Text>
           </button>
         )}
       </Upload>
       <div className="flex flex-col mb-6 font-semibold items-center gap-2">
-        <h6 className="text-md leading-sm text-gray-700">
-          {t("Upload a photo")}
-        </h6>
-        <p className="text-sm leading-sm text-gray-400">
-          (Recommend JPEG, PNG. Maximum 1MB)
-        </p>
+        <Text type="CAPTION1">{t("Upload a photo")}</Text>
+        <Text type="CAPTION4" className="text-center">
+          {t("(Recommend JPEG, PNG. Maximum 2MB)")}
+        </Text>
       </div>
     </div>
   );

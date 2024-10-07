@@ -1,3 +1,4 @@
+import { EStatus } from "@/enum/EStatus";
 import { IBaseEntity } from ".";
 import { IRole } from "./role";
 
@@ -21,4 +22,16 @@ export interface IUser extends IBaseEntity {
   roleId?: string;
 
   isOwner: boolean;
+
+  city: boolean;
+
+  district: boolean;
+
+  ward: boolean;
+
+  address: boolean;
+
+  status: EStatus | boolean;
+
+  gender: string;
 }

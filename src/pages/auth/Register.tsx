@@ -1,26 +1,30 @@
 import { IconGoogle } from "@/assets/Icon";
 import Text from "@/components/Text";
-import { Button, Flex, Form, Input } from "antd";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import useAuthService from "./useAuthService";
-import { useNavigate } from "react-router-dom";
+import { STORAGE } from "@/configs/storage";
+import { cookieStorageUtil } from "@/service/storage";
 import { PATHNAME } from "@/utils/Pathname";
-import useUserService from "../user/useAccountService";
+import { Button, Flex, Form, Input } from "antd";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import useUserService from "../account/useAccountService";
+import useAuthService from "./useAuthService";
 interface IRegisterProps {}
 
 const Register = (props: IRegisterProps) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const { rulesForm, login } = useAuthService();
+  const { rulesForm } = useAuthService();
   const { create, loading } = useUserService();
   const navigate = useNavigate();
   const onFinish = (v: any) => {
-    console.log(v);
     v.shopId = "a1f63599-52e7-4629-8523-cfdc1c5c0d61";
     create(v);
   };
 
+  useEffect(() => {
+    cookieStorageUtil.remove(STORAGE.NAAT_TOKEN_KEY);
+  }, []);
   return (
     <Flex vertical gap={30}>
       <Text type="H2">{t("Đăng ký")}</Text>

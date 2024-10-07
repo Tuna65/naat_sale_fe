@@ -1,6 +1,6 @@
 import Text from "@/components/Text";
 import { ICreateShopProps } from "@/types/shop";
-import { Button, Col, Flex, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, Row } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import useShopService from "./useShopService";

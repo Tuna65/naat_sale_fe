@@ -1,6 +1,7 @@
 import { Skeleton, Spin } from "antd";
 import React, { ReactNode, useMemo } from "react";
 import { TableLoading } from "./BoxTable";
+import Text from "./Text";
 
 interface IContainerProps {
   isLoading?: boolean;
@@ -47,8 +48,9 @@ const Container = (props: IContainerProps) => {
         );
       case "SPIN":
         return (
-          <div className="flex justify-center h-[300px] items-center">
+          <div className="flex gap-6 justify-center flex-col h-[300px] items-center bg-white shadow-box">
             <Spin></Spin>
+            <Text type='TITLE4'>{'Loading ...'}</Text>
           </div>
         );
       default:

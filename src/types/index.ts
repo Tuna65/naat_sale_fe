@@ -3,6 +3,7 @@ export interface IBaseLoading {
   edit: boolean;
   find: boolean;
   delete: boolean;
+  detail: boolean;
 }
 
 export interface IBasePagination {

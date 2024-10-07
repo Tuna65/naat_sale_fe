@@ -1,20 +1,26 @@
 import { IconAccount, IconOrder, IconPieChart, IconProduct } from "@/assets/Icon";
 import Text from "@/components/Text";
 import { PATHNAME } from "@/utils/Pathname";
-import { Flex, Layout as LayoutAnt, Menu, MenuProps } from "antd";
+import { Flex, Image, Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
 
-const { Sider } = LayoutAnt;
+import { sidebarSelector } from "@/store/modules/sidebar/selector";
+import { useSelector } from "react-redux";
+import { func } from "@/utils/func";
+import useGlobalService from "@/utils/useGlobalService";
 
 const Layout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const openSidebar = useSelector(sidebarSelector);
+  const { navItem } = useGlobalService();
+
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
   const activeKey = React.useMemo(() => {
-    return [pathname];
+    return [`/${pathname.split("/")[1]}`];
   }, [pathname]);
 
   useEffect(() => {
@@ -24,29 +30,41 @@ const Layout = () => {
   return (
     <div>
       <Flex>
-        <Sider width={270} className="border-0 border-r border-black border-opacity-10 border-solid ">
-          <Flex className="py-7 px-12" justify="start" align="center">
-            <Text type="TITLE1" className="text-primary">
-              NhimStore
-            </Text>
+        <div className="w-auto  border-0 border-r border-solid border-black border-opacity-10">
+          <Flex
+            className="h-[78px] border-0 border-b border-solid border-black border-opacity-10"
+            justify="center"
+            align="center"
+          >
+            {openSidebar ? (
+              <Image className="rounded-lg" width={48} height={48} src={func.avatar("Nhím Store", "")} />
+            ) : (
+              <Text type="TITLE1" className="text-primary">
+                {"Nhím Store"}
+              </Text>
+            )}
           </Flex>
-          <Menu
-            mode="inline"
-            selectedKeys={activeKey}
-            openKeys={openKeys}
-            style={{ height: "100%" }}
-            items={navItem}
-            className="px-4"
-            onClick={(i) => navigate(i.key)}
-            onOpenChange={(o) => setOpenKeys(o)}
-          />
-        </Sider>
+
+          <div className="p-4">
+            <Menu
+              mode="inline"
+              selectedKeys={activeKey}
+              openKeys={openKeys}
+              style={{ height: "100%" }}
+              items={navItem}
+              className=""
+              onClick={(i) => navigate(i.key)}
+              onOpenChange={(o) => setOpenKeys(o)}
+              inlineCollapsed={openSidebar}
+            />
+          </div>
+        </div>
         <div className="flex-1 h-[100vh] overflow-hidden">
           <div className="shadow-bottom relative z-10">
             <Header />
           </div>
 
-          <div className="bg-[#fafafa] h-[calc(100vh-88px)] p-6 overflow-y-auto relative z-0">
+          <div className="bg-[#fafafa] h-[calc(100vh-88px)] p-6 overflow-y-auto ">
             <Outlet />
           </div>
         </div>
@@ -56,47 +74,3 @@ const Layout = () => {
 };
 
 export default Layout;
-const navItem: MenuProps["items"] = [
-  {
-    key: PATHNAME.DASHBOARD,
-    icon: React.createElement(IconPieChart),
-    label: `Dashboard`,
-  },
-  {
-    key: "PATHNAME.ORDER",
-    icon: React.createElement(IconOrder),
-    label: <Text type="HEADLINE">{"Order"}</Text>,
-    children: [
-      {
-        key: PATHNAME.ORDER.INDEX,
-        label: <Text type="HEADLINE">{"Order"}</Text>,
-      },
-    ],
-  },
-  {
-    key: "PATHNAME.PRODUCT",
-    icon: React.createElement(IconProduct),
-    label: <Text type="HEADLINE">{"Product"}</Text>,
-    children: [
-      {
-        key: PATHNAME.PRODUCT.INDEX,
-        label: <Text type="HEADLINE">{"Product"}</Text>,
-      },
-      {
-        key: PATHNAME.PRODUCT_GROUP,
-        label: <Text type="HEADLINE">{"Product group"}</Text>,
-      },
-    ],
-  },
-  {
-    key: "PATHNAME.USER",
-    icon: React.createElement(IconAccount),
-    label: <Text type="HEADLINE">{"User"}</Text>,
-    children: [
-      {
-        key: PATHNAME.USER.INDEX,
-        label: <Text type="HEADLINE">{"Users"}</Text>,
-      },
-    ],
-  },
-];

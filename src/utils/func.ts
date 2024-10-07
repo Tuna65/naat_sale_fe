@@ -26,7 +26,7 @@ export const func = {
     return Number(str.match(regexNumber)?.join("")) ?? 0;
   },
 
-  formatDate: (createdAt: string, type: string) => {
+  formatDate: (createdAt?: string, type?: string) => {
     const parsedDate = moment(createdAt).subtract(-7, "hours");
     return parsedDate.format(type);
   },

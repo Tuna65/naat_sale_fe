@@ -5,7 +5,7 @@ import ProtectedRoute from "./layout/ProtectedRoute";
 import LoginLayout from "./pages/auth";
 import { configAntdProvider } from "./utils";
 import { ConfigProvider } from "antd";
-import { Login, Register, Shop, routerList } from "./pages";
+import { CreatePackage, EditPackage, EditShop, Login, Package, Register, Shop, routerList } from "./pages";
 import { PATHNAME } from "./utils/Pathname";
 import ComingSoon from "./components/ComingSoon";
 import CreateShop from "./pages/shop/CreateShop";
@@ -20,8 +20,6 @@ function App() {
             <Route path={PATHNAME.AUTH.LOGIN} element={<Login />} />
             <Route path={PATHNAME.AUTH.REGISTER} element={<Register />} />
           </Route>
-          <Route path={PATHNAME.SHOP.CREATE} element={<CreateShop />} />
-          <Route path={PATHNAME.SHOP.INDEX} element={<Shop />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
               {routerList.map((r, index) => {
@@ -31,6 +29,14 @@ function App() {
               <Route path="*" element={<Navigate replace to={PATHNAME.COMMING_SOON} />} />
             </Route>
           </Route>
+
+          {/* admin */}
+          <Route path={PATHNAME.SHOP.EDIT} element={<EditShop />} />
+          <Route path={PATHNAME.SHOP.CREATE} element={<CreateShop />} />
+          <Route path={PATHNAME.SHOP.INDEX} element={<Shop />} />
+          <Route path={PATHNAME.PACKAGE.CREATE} element={<CreatePackage />} />
+          <Route path={PATHNAME.PACKAGE.INDEX} element={<Package />} />
+          <Route path={PATHNAME.PACKAGE.EDIT} element={<EditPackage />} />
         </Routes>
       </ConfigProvider>
     </>

@@ -3,7 +3,7 @@ import { IBaseLoading } from "@/types";
 export const configAntdProvider = {
   token: {
     colorPrimary: "#5932EA",
-    borderRadius: 8,
+    borderRadius: 6,
     colorBgContainer: "#fff",
   },
 };
@@ -24,4 +24,5 @@ export const baseLoading: IBaseLoading = {
   delete: false,
   edit: false,
   find: false,
+  detail: false,
 };

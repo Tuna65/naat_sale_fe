@@ -21,13 +21,37 @@ const LazyLayout = (importStatement: () => Promise<any>) => {
 export const Dashboard = () => LazyLayout(() => import("./dashboard"));
 export const Product = () => LazyLayout(() => import("./product"));
 export const Order = () => LazyLayout(() => import("./order"));
-export const Users = () => LazyLayout(() => import("./user"));
+export const Users = () => LazyLayout(() => import("./account"));
 export const Login = () => LazyLayout(() => import("./auth/Login"));
 export const Register = () => LazyLayout(() => import("./auth/Register"));
 export const CreateShop = () => LazyLayout(() => import("./shop/CreateShop"));
+export const EditShop = () => LazyLayout(() => import("./shop/EditShop"));
 export const Shop = () => LazyLayout(() => import("./shop"));
+export const CreatAccount = () => LazyLayout(() => import("./account/CreatAccount"));
+export const EditAccount = () => LazyLayout(() => import("./account/EditAccount"));
+export const AccountDetail = () => LazyLayout(() => import("./account/AccountDetail"));
+export const CreatePackage = () => LazyLayout(() => import("./package/CreatePackage"));
+export const Package = () => LazyLayout(() => import("./package"));
+export const EditPackage = () => LazyLayout(() => import("./package/EditPackage"));
+export const Location = () => LazyLayout(() => import("./location"));
 
 export const routerList: TRouterList[] = [
+  {
+    component: <Location />,
+    path: PATHNAME.LOCATION.INDEX,
+  },
+  {
+    component: <AccountDetail />,
+    path: PATHNAME.USER.DETAIL,
+  },
+  {
+    component: <EditAccount />,
+    path: PATHNAME.USER.EDIT,
+  },
+  {
+    component: <CreatAccount />,
+    path: PATHNAME.USER.CREATE,
+  },
   {
     component: <Users />,
     path: PATHNAME.USER.INDEX,

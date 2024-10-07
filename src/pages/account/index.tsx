@@ -19,32 +19,33 @@ const Users = (props: Props) => {
   useTitle(t("Quản lý nhân viên"));
   const navigate = useNavigate();
   const { params, onParams } = useSearchQuery();
-  const { columns, findAccount } = useUserService();
+  const { columns, findAccount, loading } = useUserService();
 
   const [data, setData] = useState<ResPagination<any>>(defaultResPage);
 
   useEffect(() => {
-    if (!params.page) {
-      onParams({ page: 1, limit: 20 });
-    }
+    if (!params.page) onParams({ page: 1, limit: 20 });
   }, []);
 
   useEffect(() => {
-    const query: IQueryAccount = { page: params.page?.toString(), limit: params.limit?.toString() };
+    const query: IQueryAccount = {
+      page: params.page?.toString(),
+      limit: params.limit?.toString(),
+      name: params.name?.toString(),
+    };
     params.page && findAccount(query, (v) => setData(v));
   }, [params]);
-  console.log(params);
 
   return (
     <Flex vertical gap={20} className=" rounded-lg">
       <Flex className="" justify="space-between">
-        <SearchBox onChange={(v) => {}} value="" className="" />
+        <SearchBox onChange={(name) => onParams({ ...params, name })} value="" className="" />
         <Button type="primary" size="large" onClick={() => navigate(PATHNAME.USER.CREATE)}>
           {t("Thêm mới")}
         </Button>
       </Flex>
 
-      <BoxTable columns={columns as any} data={data} />
+      <BoxTable isLoading={loading.find} columns={columns as any} data={data} />
     </Flex>
   );
 };

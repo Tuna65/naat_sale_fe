@@ -8,10 +8,11 @@ type Props = {
   value?: number;
   className?: string;
   placeholder?: string;
+  size?: "large" | "small" | "middle";
 };
 
 const NumbericInput = (props: Props) => {
-  const { onChange, value, className, placeholder } = props;
+  const { onChange, value, className, placeholder, size } = props;
   return (
     <div>
       <Input
@@ -19,7 +20,7 @@ const NumbericInput = (props: Props) => {
           const value = func.stringToNumber(e.target.value);
           onChange && onChange(value > 0 ? value : 0);
         }}
-        size="large"
+        size={size ?? "large"}
         value={func.numberWithDots(value ?? "")}
         className={`text-center w-36 ${className && className}`}
         placeholder={placeholder}

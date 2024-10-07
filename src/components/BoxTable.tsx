@@ -29,9 +29,9 @@ const BoxTable = (props: ITableProps) => {
     onChange: onSelectChange,
   };
   return (
-    <div>
-      <div className="border shadow-box border-solid border-black border-opacity-10 rounded-lg overflow-hidden">
-        <Container type="TABLE" isLoading={isLoading}>
+    <div className="pb-4 bg-white shadow-box rounded-lg">
+      <div className="border border-solid border-black border-opacity-10 rounded-lg overflow-hidden">
+        <Container type="SPIN" isLoading={isLoading}>
           {!isSelectRow ? (
             <TableAntd
               columns={columns}

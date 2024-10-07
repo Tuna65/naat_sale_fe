@@ -17,6 +17,8 @@ export const PATHNAME = {
     CREATE: "/shop/create",
     DETAIL: "/shop/:id",
     EDIT: "/shop/edit/:id",
+    EDIT_ID: (id?: string) => `/shop/edit/${id}`,
+    DETAIL_ID: (id?: string) => `/shop/${id}`,
   },
   PRODUCT: {
     INDEX: "/product",
@@ -29,6 +31,24 @@ export const PATHNAME = {
     CREATE: "/user/create",
     DETAIL: "/user/:id",
     EDIT: "/user/edit/:id",
+    EDIT_ID: (id?: string) => `/user/edit/${id}`,
+    DETAIL_ID: (id?: string) => `/user/${id}`,
+  },
+  LOCATION: {
+    INDEX: "/location",
+    CREATE: "/location/create",
+    DETAIL: "/location/:id",
+    EDIT: "/location/edit/:id",
+    EDIT_ID: (id?: string) => `/location/edit/${id}`,
+    DETAIL_ID: (id?: string) => `/location/${id}`,
+  },
+  PACKAGE: {
+    INDEX: "/package",
+    CREATE: "/package/create",
+    DETAIL: "/package/:id",
+    EDIT: "/package/edit/:id",
+    EDIT_ID: (id?: string) => `/package/edit/${id}`,
+    DETAIL_ID: (id?: string) => `/package/${id}`,
   },
   PRODUCT_GROUP: "/product-group",
 };

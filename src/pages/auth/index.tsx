@@ -1,16 +1,11 @@
 import { IconFrameLogin } from "@/assets/Icon";
-import { STORAGE } from "@/configs/storage";
-import { cookieStorageUtil } from "@/service/storage";
 import { Flex } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 
 interface ILoginLayoutProps {}
 
 const LoginLayout = (props: ILoginLayoutProps) => {
-  useEffect(() => {
-    cookieStorageUtil.remove(STORAGE.NAAT_TOKEN_KEY);
-  }, []);
   return (
     <Flex align="center" justify="center" className="h-[100vh] ">
       <div className="w-[1440px] border border-solid bg-white border-gray-200 xl:rounded-lg overflow-hidden shadow-box">

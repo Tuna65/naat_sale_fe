@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import Text from "./Text";
 
 type Props = {
-  type: 'ACTIVE' | 'INACTIVE' | 'PAID' | 'UNPAID' | 'IN_PROGRESS';
+  type: "ACTIVE" | "INACTIVE" | "PAID" | "UNPAID" | "IN_PROGRESS";
 };
 
 const Status = (props: Props) => {
@@ -10,50 +11,51 @@ const Status = (props: Props) => {
   const { type } = props;
   const statusStyle = useMemo(() => {
     switch (type) {
-      case 'ACTIVE': {
+      case "ACTIVE": {
         return {
-          text: t('Active'),
-          border: 'border-green-500 bg-green-50',
-          textColor: 'text-green-500',
+          text: t("Active"),
+          border: "bg-green-100",
+          textColor: "text-green-500",
         };
       }
-      case 'INACTIVE': {
+      case "INACTIVE": {
         return {
-          text: t('Inactive'),
-          border: 'border-gray-500 bg-gray-50',
-          textColor: 'text-gary-500',
+          text: t("Inactive"),
+          border: " bg-gray-100",
+          textColor: "text-gary-500",
         };
       }
 
-      case 'PAID': {
+      case "PAID": {
         return {
-          text: t('Paid'),
-          border: 'border-green-500 bg-green-50',
-          textColor: 'text-green-500',
+          text: t("Paid"),
+          border: "bg-green-100",
+          textColor: "text-green-500",
         };
       }
-      case 'UNPAID': {
+      case "UNPAID": {
         return {
-          text: t('UnPaid'),
-          border: 'border-gray-500 bg-gray-50',
-          textColor: 'text-gary-500',
+          text: t("UnPaid"),
+          border: " bg-gray-100",
+          textColor: "text-gary-500",
         };
       }
-      case 'IN_PROGRESS': {
+      case "IN_PROGRESS": {
         return {
-          text: t('In Progress'),
-          border: 'border-orange bg-orange bg-opacity-10',
-          textColor: 'text-orange',
+          text: t("In Progress"),
+          border: " bg-orange bg-opacity-10",
+          textColor: "text-orange",
         };
       }
     }
   }, [type]);
   return (
     <div>
-      <div
-        className={`px-2 py-1  rounded-lg border border-solid inline-block ${statusStyle?.border}`}
-      >
-        <p className={`font-medium text-md ${statusStyle?.textColor}`}>{statusStyle?.text}</p>
+      <div className={`px-3 py-2  rounded-lg inline-block ${statusStyle?.border}`}>
+        <Text className={`${statusStyle?.textColor}`} type="CAPTION2">
+          {statusStyle?.text}
+        </Text>
+        {/* <p className={`font-medium text-md ${statusStyle?.textColor}`}>{statusStyle?.text}</p> */}
       </div>
     </div>
   );

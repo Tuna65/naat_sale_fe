@@ -4,6 +4,7 @@ import { IQueryAccount } from "@/types/account";
 
 import { message } from "antd";
 import http from "./http";
+import { EStatus } from "@/enum/EStatus";
 
 const path = `/account` as const;
 
@@ -27,7 +28,7 @@ export const accountApi = {
     }
   },
 
-  async update(body: any, id: string): Promise<any | any> {
+  async update(id: string, body: IUser): Promise<any | any> {
     try {
       const res = await http.put(`${path}/${id}`, body);
       if (res.data.code) throw Error(res.data.message);
@@ -47,10 +48,13 @@ export const accountApi = {
     }
   },
 
-  async detail(id: string, businessId?: string, shopId?: string): Promise<any | any> {
+  async detail(id: string): Promise<any | any> {
     try {
-      const res = await http.get(`${path}/${id}?businessId=${businessId}&shopId=${shopId}`);
-      return res.data;
+      const res = await http.get(`${path}/${id}`);
+      const data = { ...res.data };
+      data.status = data.status == EStatus.ACTIVE ? true : false;
+      data.password = "******";
+      return data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);
     }

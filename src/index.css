@@ -77,3 +77,11 @@ h6 {
   font-size: 13px;
   margin-top: 3px;
 }
+
+.ant-menu {
+  border-inline-end: none !important;
+}
+
+.ant-input {
+  font-size: 16px !important;
+}

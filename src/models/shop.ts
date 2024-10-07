@@ -1,9 +1,11 @@
+import { EShopStatus } from "@/enum/EShopStatus";
 import { IBaseEntity } from ".";
 
 export interface IShop extends IBaseEntity {
-  status: string;
+  status: EShopStatus;
   name: string;
-  package: string;
-  alias: string;
+  shopAlias: string;
   image: string;
+  packageId: string;
+  expiredDate: Date;
 }
