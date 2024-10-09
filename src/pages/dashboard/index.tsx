@@ -6,17 +6,23 @@ import PackageInfo from "./components/PackageInfo";
 import { Col, Row } from "antd";
 import CShopInfo from "./components/CShopInfo";
 import CReport from "./components/CReport";
+import { useBoolean } from "@/hooks/useBoolean";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
   useTitle("Dashboard");
   const [detailData, setDetailData] = useState<IShop>();
+  const [loading, { on, off }] = useBoolean();
   const handleGetShop = async () => {
     try {
+      on();
       const res = await shopApi.findByAlias();
       if (res) setDetailData(res);
-    } catch (error) {}
+      off();
+    } catch (error) {
+      off();
+    }
   };
 
   useEffect(() => {
@@ -28,7 +34,7 @@ const Dashboard = (props: Props) => {
         <CReport />
       </Col>
       <Col span={17}>
-        <CShopInfo shop={detailData as IShop} />
+        <CShopInfo shop={detailData as IShop} isLoading={loading} />
       </Col>
       <Col span={7}>
         <PackageInfo packageId={detailData?.packageId as string} />

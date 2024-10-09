@@ -144,15 +144,15 @@ const useGlobalService = () => {
       ],
     },
     {
-      key: "PATHNAME.USER",
+      key: PATHNAME.USER.INDEX,
       icon: React.createElement(IconAccount),
       label: <Text type="HEADLINE">{t("Tài khoản")}</Text>,
-      children: [
-        {
-          key: PATHNAME.USER.INDEX,
-          label: <Text type="HEADLINE">{t("Tài khoản")}</Text>,
-        },
-      ],
+      // children: [
+      //   {
+      //     key: PATHNAME.USER.INDEX,
+      //     label: <Text type="HEADLINE">{t("Tài khoản")}</Text>,
+      //   },
+      // ],
     },
     {
       key: PATHNAME.LOCATION.INDEX,
