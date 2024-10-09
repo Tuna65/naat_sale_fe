@@ -5,7 +5,11 @@ export interface IShop extends IBaseEntity {
   status: EShopStatus;
   name: string;
   shopAlias: string;
+  phone: string;
   image: string;
   packageId: string;
-  expiredDate: Date;
+  address: Date;
+  city: Date;
+  district: Date;
+  ward: Date;
 }

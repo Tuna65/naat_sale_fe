@@ -47,16 +47,6 @@ export const shopApi = {
     }
   },
 
-  async changePassword(body: any): Promise<any | any> {
-    try {
-      const res = await http.put(`${path}/change-password`, body);
-      if (res.data.code) throw Error(res.data.message);
-      return res.data;
-    } catch (error: any) {
-      message.error(error?.data?.message ?? error?.data?.message[0]);
-    }
-  },
-
   async detail(id: string): Promise<any | any> {
     try {
       const res = await http.get(`${path}/${id}`);
@@ -66,11 +56,9 @@ export const shopApi = {
     }
   },
 
-  async detailByToken(businessId?: string, shopId?: string): Promise<any | any> {
+  async findByAlias(): Promise<any | any> {
     try {
-      const res = await http.get(`${path}/me`, {
-        params: { businessId, shopId },
-      });
+      const res = await http.get(`${path}-alias`);
       return res.data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);

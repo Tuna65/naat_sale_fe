@@ -1,30 +1,35 @@
-import { VoidFunc } from "@/models";
+import useProvince from "@/hooks/useProvince";
+import { SuccessFunc, VoidFunc } from "@/models";
+import { ILocation } from "@/models/location";
+import { func } from "@/utils/func";
+import { OptionStatus } from "@/utils/option";
 import useGlobalService from "@/utils/useGlobalService";
 import { Col, Form, Input, Modal, Row, Select, Switch } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import useLocationService from "../useLocationService";
-import { EStatus } from "@/enum/EStatus";
-import useProvince from "@/hooks/useProvince";
-import { func } from "@/utils/func";
-import { OptionStatus } from "@/utils/option";
-import { ILocation } from "@/models/location";
 
 type Props = {
   open?: boolean;
   off: VoidFunc;
   location: ILocation;
+  onSuccessUpdate: SuccessFunc<ILocation>;
 };
 
 const CModalEditLocation = (props: Props) => {
-  const { off, open, location } = props;
+  const { off, open, location, onSuccessUpdate } = props;
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const { loading, editLocation } = useLocationService();
   const { districts, onChangeDistricts, onChangeProvince, province, wards } = useProvince();
   const { rulesForm } = useGlobalService();
   const onFinish = (v: any) => {
-    editLocation(location?.id ?? "", v, (d) => off());
+    editLocation(location?.id ?? "", v, onSuccess);
+  };
+
+  const onSuccess = (value: ILocation) => {
+    off();
+    onSuccessUpdate(value);
   };
   return (
     <Modal

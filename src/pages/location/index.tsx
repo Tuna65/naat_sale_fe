@@ -4,7 +4,7 @@ import { ResPagination } from "@/models";
 import { ILocation } from "@/models/location";
 import { defaultResPage } from "@/utils";
 import { Button, Flex } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import useLocationService from "./useLocationService";
 import { useSearchQuery } from "@/hooks/useQuery";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import { PATHNAME } from "@/utils/Pathname";
 import { useBoolean } from "@/hooks/useBoolean";
 import CModalCreatLocation from "./components/CModalCreatLocation";
 import CModalEditLocation from "./components/CModalEditLocation";
+import { cloneDeep } from "lodash";
 
 const Location = () => {
   const { t } = useTranslation();
@@ -38,6 +39,15 @@ const Location = () => {
     };
     params.page && findLocation(query, (v) => setData(v));
   }, [params]);
+
+  const onUpdateData = useCallback(
+    (location: ILocation) => {
+      const dataClone = cloneDeep(data);
+      const items = dataClone.items.filter((i) => i.id !== location.id);
+      setData({ ...dataClone, items: [...items, location] });
+    },
+    [data]
+  );
   return (
     <Flex vertical gap={24}>
       <Flex justify="space-between" align="center">
@@ -57,8 +67,13 @@ const Location = () => {
         }
         isLoading={loading.find}
       />
-      <CModalCreatLocation off={off} open={openModal} />
-      <CModalEditLocation off={offEdit} open={openModalEdit} location={location as ILocation} />
+      <CModalCreatLocation off={off} open={openModal} onSuccessUpdate={onUpdateData} />
+      <CModalEditLocation
+        onSuccessUpdate={onUpdateData}
+        off={offEdit}
+        open={openModalEdit}
+        location={location as ILocation}
+      />
     </Flex>
   );
 };

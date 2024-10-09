@@ -1,25 +1,31 @@
 import useProvince from "@/hooks/useProvince";
-import { VoidFunc } from "@/models";
+import { SuccessFunc, VoidFunc } from "@/models";
 import { func } from "@/utils/func";
 import useGlobalService from "@/utils/useGlobalService";
 import { Col, Form, Input, Modal, Row, Select, Switch } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import useLocationService from "../useLocationService";
+import { ILocation } from "@/models/location";
 
-type Props = {
+interface ICModalCreatLocationProps {
   open?: boolean;
   off: VoidFunc;
-};
-const CModalCreatLocation = (props: Props) => {
-  const { off, open } = props;
+  onSuccessUpdate: SuccessFunc<ILocation>;
+}
+const CModalCreatLocation = (props: ICModalCreatLocationProps) => {
+  const { off, open, onSuccessUpdate } = props;
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const { loading, create } = useLocationService();
   const { districts, onChangeDistricts, onChangeProvince, province, wards } = useProvince();
   const { rulesForm } = useGlobalService();
   const onFinish = (v: any) => {
-    create(v, off);
+    create(v, onSuccess);
+  };
+  const onSuccess = (value: ILocation) => {
+    onSuccessUpdate(value);
+    off();
   };
   return (
     <Modal
@@ -102,7 +108,7 @@ const CModalCreatLocation = (props: Props) => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item label={t("Đặt làm địa chỉ mặc định")} name="isDefault" rules={rulesForm.address}>
+              <Form.Item label={t("Đặt làm địa chỉ mặc định")} name="isDefault">
                 <Switch />
               </Form.Item>
             </Col>
