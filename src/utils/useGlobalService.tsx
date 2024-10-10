@@ -1,4 +1,4 @@
-import { IconAccount, IconLocation, IconOrder, IconPieChart, IconProduct } from "@/assets/Icon";
+import { IconAccount, IconLocation, IconOrder, IconPieChart, IconProduct, IconRole } from "@/assets/Icon";
 import Text from "@/components/Text";
 import { PATHNAME } from "@/utils/Pathname";
 import { MenuProps } from "antd";
@@ -138,7 +138,7 @@ const useGlobalService = () => {
           label: <Text type="HEADLINE">{t("Sản phẩm")}</Text>,
         },
         {
-          key: PATHNAME.PRODUCT_GROUP,
+          key: PATHNAME.PRODUCT_GROUP.INDEX,
           label: <Text type="HEADLINE">{t("Nhóm sản phẩm")}</Text>,
         },
       ],
@@ -158,6 +158,15 @@ const useGlobalService = () => {
       key: PATHNAME.LOCATION.INDEX,
       icon: React.createElement(IconLocation),
       label: <Text type="HEADLINE">{t("Chi nhánh")}</Text>,
+    },
+    {
+      key: PATHNAME.ROLE.INDEX,
+      icon: (
+        <div className="opacity-30">
+          <IconRole />
+        </div>
+      ),
+      label: <Text type="HEADLINE">{t("Vai trò")}</Text>,
     },
   ];
   return { rulesForm, navItem };

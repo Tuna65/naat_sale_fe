@@ -11,6 +11,7 @@ import { useSearchQuery } from "@/hooks/useQuery";
 import { IQueryAccount } from "@/types/account";
 import { useNavigate } from "react-router-dom";
 import { PATHNAME } from "@/utils/Pathname";
+import ContainerTablePage from "@/components/ContainerTablePage";
 
 type Props = {};
 
@@ -24,10 +25,6 @@ const Users = (props: Props) => {
   const [data, setData] = useState<ResPagination<any>>(defaultResPage);
 
   useEffect(() => {
-    if (!params.page) onParams({ page: 1, limit: 20 });
-  }, []);
-
-  useEffect(() => {
     const query: IQueryAccount = {
       page: params.page?.toString(),
       limit: params.limit?.toString(),
@@ -37,16 +34,12 @@ const Users = (props: Props) => {
   }, [params]);
 
   return (
-    <Flex vertical gap={20} className=" rounded-lg">
-      <Flex className="" justify="space-between">
-        <SearchBox onChange={(name) => onParams({ ...params, name })} value="" className="" />
-        <Button type="primary" size="large" onClick={() => navigate(PATHNAME.USER.CREATE)}>
-          {t("Thêm mới")}
-        </Button>
-      </Flex>
-
-      <BoxTable isLoading={loading.find} columns={columns as any} data={data} />
-    </Flex>
+    <ContainerTablePage
+      data={data as any}
+      column={columns as any}
+      loading={loading.find}
+      actionCreate={() => navigate(PATHNAME.USER.CREATE)}
+    />
   );
 };
 

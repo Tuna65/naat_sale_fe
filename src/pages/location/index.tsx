@@ -1,20 +1,17 @@
-import BoxTable from "@/components/BoxTable";
-import SearchBox from "@/components/SearchBox";
+import ContainerTablePage from "@/components/ContainerTablePage";
+import { useBoolean } from "@/hooks/useBoolean";
+import { useSearchQuery } from "@/hooks/useQuery";
+import { useTitle } from "@/hooks/useTitle";
 import { ResPagination } from "@/models";
 import { ILocation } from "@/models/location";
 import { defaultResPage } from "@/utils";
-import { Button, Flex } from "antd";
-import React, { useEffect, useState, useCallback } from "react";
-import useLocationService from "./useLocationService";
-import { useSearchQuery } from "@/hooks/useQuery";
+import { Flex } from "antd";
+import { cloneDeep } from "lodash";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useTitle } from "@/hooks/useTitle";
-import { useNavigate } from "react-router-dom";
-import { PATHNAME } from "@/utils/Pathname";
-import { useBoolean } from "@/hooks/useBoolean";
 import CModalCreatLocation from "./components/CModalCreatLocation";
 import CModalEditLocation from "./components/CModalEditLocation";
-import { cloneDeep } from "lodash";
+import useLocationService from "./useLocationService";
 
 const Location = () => {
   const { t } = useTranslation();
@@ -22,14 +19,9 @@ const Location = () => {
   const { findLocation, loading, columns } = useLocationService();
   const [openModal, { on, off }] = useBoolean();
   const [openModalEdit, { on: onEdit, off: offEdit }] = useBoolean();
-  const navigate = useNavigate();
   const { params, onParams } = useSearchQuery();
   const [data, setData] = useState<ResPagination<ILocation>>(defaultResPage);
   const [location, setLocation] = useState<ILocation>();
-
-  useEffect(() => {
-    if (!params.page) onParams({ page: 1, limit: 20 });
-  }, []);
 
   useEffect(() => {
     const query: any = {
@@ -43,30 +35,27 @@ const Location = () => {
   const onUpdateData = useCallback(
     (location: ILocation) => {
       const dataClone = cloneDeep(data);
-      const items = dataClone.items.filter((i) => i.id !== location.id);
-      setData({ ...dataClone, items: [...items, location] });
+      const index = dataClone.items.findIndex((i) => i.id === location.id);
+      dataClone.items[index] = location;
+      setData(dataClone);
     },
     [data]
   );
+  
   return (
     <Flex vertical gap={24}>
-      <Flex justify="space-between" align="center">
-        <SearchBox onChange={() => {}} value="" />
-        <Button type="primary" onClick={on}>
-          {t("Thêm mới")}
-        </Button>
-      </Flex>
-
-      <BoxTable
-        data={data}
-        columns={
+      <ContainerTablePage
+        data={data as any}
+        column={
           columns((record) => {
             onEdit();
             setLocation(record);
           }) as any
         }
-        isLoading={loading.find}
+        loading={loading.find}
+        actionCreate={on}
       />
+      
       <CModalCreatLocation off={off} open={openModal} onSuccessUpdate={onUpdateData} />
       <CModalEditLocation
         onSuccessUpdate={onUpdateData}

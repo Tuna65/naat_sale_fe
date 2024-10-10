@@ -6,14 +6,13 @@ import Text from "./Text";
 import { useNavigate } from "react-router-dom";
 
 interface IPageContainerProps {
-  loading?: boolean;
   children: React.ReactNode;
   actions?: React.ReactNode;
   hiddenBack?: boolean;
 }
 
 const PageContainer = (props: IPageContainerProps) => {
-  const { children, actions, loading, hiddenBack } = props;
+  const { children, actions, hiddenBack } = props;
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
@@ -27,7 +26,7 @@ const PageContainer = (props: IPageContainerProps) => {
             </Text>
           </Flex>
 
-          <div className="">{actions}</div>
+          <Flex className="">{actions}</Flex>
         </Flex>
       )}
 

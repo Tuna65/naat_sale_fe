@@ -50,5 +50,22 @@ export const PATHNAME = {
     EDIT_ID: (id?: string) => `/package/edit/${id}`,
     DETAIL_ID: (id?: string) => `/package/${id}`,
   },
-  PRODUCT_GROUP: "/product-group",
+
+  ROLE: {
+    INDEX: "/role",
+    CREATE: "/role/create",
+    DETAIL: "/role/:id",
+    EDIT: "/role/edit/:id",
+    EDIT_ID: (id?: string) => `/role/edit/${id}`,
+    DETAIL_ID: (id?: string) => `/role/${id}`,
+  },
+  
+  PRODUCT_GROUP: {
+    INDEX: "/product-group",
+    CREATE: "/product-group/create",
+    DETAIL: "/product-group/:id",
+    EDIT: "/product-group/edit/:id",
+    EDIT_ID: (id?: string) => `/product-group/edit/${id}`,
+    DETAIL_ID: (id?: string) => `/product-group/${id}`,
+  },
 };

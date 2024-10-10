@@ -8,3 +8,4 @@ export { ReactComponent as IconOrder } from "./icon/icon-order.svg";
 export { ReactComponent as IconAccount } from "./icon/icon-account.svg";
 export { ReactComponent as IconRevenue } from "./icon/icon-revenue.svg";
 export { ReactComponent as IconLocation } from "./icon/icon-location.svg";
+export { ReactComponent as IconRole } from "./icon/icon-role.svg";

@@ -1,15 +1,15 @@
-import { locationApi } from "@/apis/shop copy";
+import { locationApi } from "@/apis/location";
+import Status from "@/components/Status";
 import Text from "@/components/Text";
-import { ResPagination, SuccessFunc, VoidFunc } from "@/models";
+import { ResPagination, SuccessFunc } from "@/models";
 import { ILocation } from "@/models/location";
 import { IBaseLoading } from "@/types";
 import { baseLoading } from "@/utils";
+import { CheckCircleTwoTone, EditOutlined } from "@ant-design/icons";
 import { Button, Flex, message } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { EditOutlined, CheckCircleTwoTone } from "@ant-design/icons";
-import Status from "@/components/Status";
 
 const useLocationService = () => {
   const { t } = useTranslation();

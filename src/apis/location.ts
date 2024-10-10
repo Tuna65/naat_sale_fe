@@ -1,6 +1,5 @@
 import { ResPagination } from "@/models";
 import { ILocation } from "@/models/location";
-import { QueryShop, BodyUpPackage } from "@/types/shop";
 
 import { message } from "antd";
 import http from "./http";

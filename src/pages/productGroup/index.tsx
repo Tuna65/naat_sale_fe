@@ -7,12 +7,13 @@ import { useTranslation } from "react-i18next";
 
 type Props = {};
 
-const Order = (props: Props) => {
+const ProductGroup = (props: Props) => {
   const { t } = useTranslation();
-  useTitle(t("Đơn hàng"));
+  useTitle(t("Nhóm sản phẩm"));
+  
   const [data, setData] = useState<ResPagination<any>>(defaultResPage);
 
   return <ContainerTablePage data={data as any} column={[]} loading={true} />;
 };
 
-export default React.memo(Order);
+export default React.memo(ProductGroup);

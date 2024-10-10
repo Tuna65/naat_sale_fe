@@ -34,8 +34,18 @@ export const CreatePackage = () => LazyLayout(() => import("./package/CreatePack
 export const Package = () => LazyLayout(() => import("./package"));
 export const EditPackage = () => LazyLayout(() => import("./package/EditPackage"));
 export const Location = () => LazyLayout(() => import("./location"));
+export const Role = () => LazyLayout(() => import("./role"));
+export const ProductGroup = () => LazyLayout(() => import("./productGroup"));
 
 export const routerList: TRouterList[] = [
+  {
+    component: <ProductGroup />,
+    path: PATHNAME.PRODUCT_GROUP.INDEX,
+  },
+  {
+    component: <Role />,
+    path: PATHNAME.ROLE.INDEX,
+  },
   {
     component: <Location />,
     path: PATHNAME.LOCATION.INDEX,

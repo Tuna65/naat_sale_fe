@@ -1,7 +1,7 @@
 import { IBaseEntity } from ".";
 
 export interface IRole extends IBaseEntity {
-  permmission: string[];
+  permission: string[];
 
   name: string;
 
