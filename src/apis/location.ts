@@ -7,9 +7,9 @@ import http from "./http";
 const path = `/location` as const;
 
 export const locationApi = {
-  async find(params?: any): Promise<ResPagination<ILocation> | any> {
+  async find(): Promise<ResPagination<ILocation> | any> {
     try {
-      const res = await http.get(`${path}`, { params });
+      const res = await http.get(`${path}`);
       return res.data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);

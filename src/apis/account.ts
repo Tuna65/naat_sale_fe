@@ -18,6 +18,15 @@ export const accountApi = {
     }
   },
 
+  async query(): Promise<ResPagination<IUser> | any> {
+    try {
+      const res = await http.get(`${path}`);
+      return res.data;
+    } catch (error: any) {
+      message.error(error?.data?.message ?? error?.data?.message[0]);
+    }
+  },
+
   async create(body: IUser): Promise<any | any> {
     try {
       const res = await http.post(`${path}`, body);

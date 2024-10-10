@@ -21,6 +21,8 @@ const ContainerTablePage = (props: Props) => {
   useEffect(() => {
     if (!params.page) onParams({ page: 1, limit: 20 });
   }, []);
+
+  
   return (
     <Flex vertical gap={24}>
       <Flex justify="space-between" align="center">

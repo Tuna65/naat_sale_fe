@@ -112,7 +112,7 @@ const useLocationService = () => {
   const findLocation = async (query: any, success: (data: ResPagination<ILocation>) => void) => {
     try {
       setLoading((prev) => ({ ...prev, find: true }));
-      const res = await locationApi.find(query);
+      const res = await locationApi.find();
       if (res) {
         success(res);
       }

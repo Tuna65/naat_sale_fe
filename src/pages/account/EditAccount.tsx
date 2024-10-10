@@ -12,9 +12,8 @@ import { IUser } from "@/models/user";
 import { EStatus } from "@/enum/EStatus";
 import CFormInfo from "./components/CFormInfo";
 import CFormAddress from "./components/CFormAddress";
-type Props = {};
 
-const EditAccount = (props: Props) => {
+const EditAccount = () => {
   const { t } = useTranslation();
   useTitle(t("Chỉnh sửa nhân viên"));
   const { editAccount, loading, detailAccount } = useAccountService();

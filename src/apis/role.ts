@@ -7,9 +7,9 @@ import http from "./http";
 const path = `/role` as const;
 
 export const roleApi = {
-  async find(params?: any): Promise<ResPagination<IRole> | any> {
+  async find(): Promise<ResPagination<IRole> | any> {
     try {
-      const res = await http.get(`${path}`, { params });
+      const res = await http.get(`${path}`);
       return res.data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);
