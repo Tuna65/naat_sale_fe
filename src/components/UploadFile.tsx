@@ -1,34 +1,32 @@
 import { GetProp, Upload, UploadFile, UploadProps, message } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import Text from "./Text";
+import { IGallery } from "@/models/gallery";
+import { galleryAPI } from "@/apis/upload";
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 type Props = {
-  onChange: (url: string) => void;
+  onChange?: (url: string) => void;
   initLink?: string;
+  hiddenText?: boolean;
 };
 
 const UploadFiles = (props: Props) => {
-  const { onChange, initLink } = props;
+  const { onChange, initLink, hiddenText } = props;
   const { t } = useTranslation();
 
   const [link, setLink] = useState<UploadFile[]>(
-    initLink
-      ? [
-          {
-            uid: `link-default`,
-            name: "res.name",
-            status: "done",
-            url: initLink,
-          },
-        ]
-      : []
+    initLink ? [{ uid: `link-default`, name: "res.name", status: "done", url: initLink }] : []
   );
 
+  useEffect(() => {
+    initLink && setLink([{ uid: `link-default`, name: "res.name", status: "done", url: initLink }]);
+    !initLink && setLink([]);
+  }, [initLink]);
+
   const beforeUpload = (file: FileType) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/webp";
 
     if (!isJpgOrPng) {
       return message.error(t("You can only upload JPG/PNG file!"));
@@ -41,13 +39,13 @@ const UploadFiles = (props: Props) => {
   };
 
   const handleUpload = async (file: any) => {
-    // try {
-    //   const res: IGallery = await galleryAPI.upload({ file });
-    //   if (res) {
-    //     onChange(res.url);
-    //     setLink([{ uid: res.id, name: res.name, status: 'done', url: `${res.url}` }]);
-    //   }
-    // } catch (error) {}
+    try {
+      const res: IGallery = await galleryAPI.upload({ file });
+      if (res) {
+        onChange && onChange(res.url);
+        setLink([{ uid: res.id, name: res.name, status: "done", url: `${res.url}` }]);
+      }
+    } catch (error) {}
   };
 
   const handleChange: UploadProps["onChange"] = (info) => {
@@ -84,16 +82,16 @@ const UploadFiles = (props: Props) => {
         {link.length == 0 && (
           <button style={{ border: 0, background: "none" }} type="button">
             <PlusOutlined />
-            <Text type="BODY">{t("Upload")}</Text>
+            <div style={{ marginTop: 8 }}>Upload</div>
           </button>
         )}
       </Upload>
-      <div className="flex flex-col mb-6 font-semibold items-center gap-2">
-        <Text type="CAPTION1">{t("Upload a photo")}</Text>
-        <Text type="CAPTION4" className="text-center">
-          {t("(Recommend JPEG, PNG. Maximum 2MB)")}
-        </Text>
-      </div>
+      {!hiddenText && (
+        <div className="flex flex-col mb-6 font-semibold items-center gap-2">
+          <h6 className="text-md leading-sm text-gray-700">{t("Upload a photo")}</h6>
+          <p className="text-sm leading-sm text-gray-400">(Recommend JPEG, PNG. Maximum 1MB)</p>
+        </div>
+      )}
     </div>
   );
 };

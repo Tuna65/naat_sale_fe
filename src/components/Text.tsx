@@ -45,12 +45,15 @@ const Text = (props: ITextProps) => {
       case "H1": {
         return "text-[42px] leading-[110%] font-bold";
       }
+      default: {
+        return "text-[15px] leading-[23px]";
+      }
     }
   }, [type]);
 
   return (
-    <div onClick={onClick && onClick}>
-      <p className={`${textClass} ${className && className}`}>{children}</p>
+    <div onClick={onClick && onClick} className="bg-transparent">
+      <p className={`${textClass} ${className && className} !bg-transparent`}>{children}</p>
     </div>
   );
 };

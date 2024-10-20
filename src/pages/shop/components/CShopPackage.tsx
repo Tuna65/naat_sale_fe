@@ -2,13 +2,12 @@ import Text from "@/components/Text";
 import { EPackage } from "@/enum/EPackage";
 import { ResPagination } from "@/models";
 import { IPackage } from "@/models/package";
+import { IShop } from "@/models/shop";
 import usePackageService from "@/pages/package/usePackageService";
 import { defaultResPage } from "@/utils";
-import { Flex, Popover } from "antd";
+import { Flex } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CaretDownOutlined } from "@ant-design/icons";
-import { IShop } from "@/models/shop";
 import useShopService from "../useShopService";
 
 interface ICShopPackageProps {

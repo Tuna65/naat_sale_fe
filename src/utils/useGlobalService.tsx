@@ -1,4 +1,4 @@
-import { IconAccount, IconLocation, IconOrder, IconPieChart, IconProduct, IconRole } from "@/assets/Icon";
+import { IconAccount, IconLocation, IconOrder, IconPieChart, IconProduct, IconRole, IconSale } from "@/assets/Icon";
 import Text from "@/components/Text";
 import { PATHNAME } from "@/utils/Pathname";
 import { MenuProps } from "antd";
@@ -109,9 +109,32 @@ const useGlobalService = () => {
         message: t("Địa chỉ không được để trống"),
       },
     ],
+    unit: [
+      {
+        required: true,
+        message: t("Đơn vị không được để trống"),
+      },
+    ],
+    price: [
+      {
+        required: true,
+        message: t("Giá không được để trống"),
+      },
+    ],
+    quantity: [
+      {
+        required: true,
+        message: t("Số lượng không được để trống"),
+      },
+    ],
   };
 
   const navItem: MenuProps["items"] = [
+    {
+      key: PATHNAME.SALE,
+      icon: React.createElement(IconSale),
+      label: `Bán hàng`,
+    },
     {
       key: PATHNAME.DASHBOARD,
       icon: React.createElement(IconPieChart),

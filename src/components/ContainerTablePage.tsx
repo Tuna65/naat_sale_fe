@@ -22,14 +22,13 @@ const ContainerTablePage = (props: Props) => {
     if (!params.page) onParams({ page: 1, limit: 20 });
   }, []);
 
-  
   return (
     <Flex vertical gap={24}>
       <Flex justify="space-between" align="center">
         <Flex>
           <SearchBox
             placeholder={t("Tìm kiếm theo tên...")}
-            value=""
+            value={params.name as string}
             onChange={(name) => onParams({ ...params, name })}
           />
         </Flex>

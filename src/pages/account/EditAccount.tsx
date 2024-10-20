@@ -1,17 +1,21 @@
 import PageContainer from "@/components/PageContainer";
 import Text from "@/components/Text";
 import UploadFile from "@/components/UploadFile";
+import { EStatus } from "@/enum/EStatus";
 import { useTitle } from "@/hooks/useTitle";
+import { IUser } from "@/models/user";
 import useGlobalService from "@/utils/useGlobalService";
-import { Button, Col, Flex, Form, Input, Row, Select, Switch } from "antd";
+import { Button, Col, Flex, Form, Row, Select, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useAccountService from "./useAccountService";
 import { useNavigate, useParams } from "react-router-dom";
-import { IUser } from "@/models/user";
-import { EStatus } from "@/enum/EStatus";
-import CFormInfo from "./components/CFormInfo";
 import CFormAddress from "./components/CFormAddress";
+import CFormInfo from "./components/CFormInfo";
+import useAccountService from "./useAccountService";
+import InfinityScroll from "@/components/InfinityScroll";
+import { roleApi } from "@/apis/role";
+import { keySelector } from "@/store/modules/tanstackKey/selector";
+import { useSelector } from "react-redux";
 
 const EditAccount = () => {
   const { t } = useTranslation();
@@ -21,6 +25,7 @@ const EditAccount = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { id } = useParams();
+  const key = useSelector(keySelector);
 
   const [detailData, setDetailData] = useState<IUser>();
 
@@ -61,7 +66,7 @@ const EditAccount = () => {
                   <Row gutter={[12, 0]}>
                     <Col span={8}>
                       <Form.Item label={t("Vai trò")} name="roleId">
-                        <Select placeholder={t("Chọn vai trò")} />
+                        <InfinityScroll placeholder={t("Chọn vai trò")} keyValue={key.role} apiFunc={roleApi.find} />
                       </Form.Item>
                     </Col>
                   </Row>

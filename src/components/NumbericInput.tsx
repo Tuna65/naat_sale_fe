@@ -9,10 +9,11 @@ type Props = {
   className?: string;
   placeholder?: string;
   size?: "large" | "small" | "middle";
+  disabled?: boolean;
 };
 
 const NumbericInput = (props: Props) => {
-  const { onChange, value, className, placeholder, size } = props;
+  const { onChange, value, className, placeholder, size, disabled } = props;
   return (
     <div>
       <Input
@@ -20,9 +21,10 @@ const NumbericInput = (props: Props) => {
           const value = func.stringToNumber(e.target.value);
           onChange && onChange(value > 0 ? value : 0);
         }}
+        disabled={disabled}
         size={size ?? "large"}
         value={func.numberWithDots(value ?? "")}
-        className={`text-center w-36 ${className && className}`}
+        className={`w-36 ${className && className}`}
         placeholder={placeholder}
       />
     </div>

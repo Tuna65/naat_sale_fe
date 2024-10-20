@@ -53,4 +53,16 @@ export const func = {
 
     return hostname.split(".")[0];
   },
+
+  renderCode: () => {
+    const numbers = "0123456789";
+    const text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    let result = "";
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * (numbers.length + text.length));
+      result += randomIndex < numbers.length ? numbers[randomIndex] : text[randomIndex - numbers.length];
+    }
+    return result;
+  },
 };

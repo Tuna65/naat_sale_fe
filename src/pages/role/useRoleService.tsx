@@ -2,17 +2,23 @@ import { roleApi } from "@/apis/role";
 import Text from "@/components/Text";
 import { ResPagination, SuccessFunc } from "@/models";
 import { IRole } from "@/models/role";
+import { keyActions } from "@/store/modules/tanstackKey";
+import { keySelector } from "@/store/modules/tanstackKey/selector";
 import { IBaseLoading } from "@/types";
 import { baseLoading } from "@/utils";
+import { func } from "@/utils/func";
+import { EditOutlined } from "@ant-design/icons";
 import { Button, Flex, message } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { CheckCircleTwoTone, EditOutlined } from "@ant-design/icons";
 
 const useRoleService = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const key = useSelector(keySelector);
 
   const columns = () => [
     {
@@ -31,16 +37,16 @@ const useRoleService = () => {
     },
     {
       title: t("Số lượng"),
-      dataIndex: "permission",
-      align: "left",
-      key: "permission",
-      render: (permission: any) => <Text type="BODY">{permission?.length ?? 0}</Text>,
+      dataIndex: "permissions",
+      align: "center",
+      key: "permissions",
+      render: (permissions: any) => <Text type="BODY">{permissions?.length ?? 0}</Text>,
     },
 
     {
       title: t("Thao tác"),
       dataIndex: "action",
-      align: "left",
+      align: "center",
       key: "action",
       render: (permission: any) => (
         <Flex justify="center">
@@ -58,7 +64,7 @@ const useRoleService = () => {
       setLoading((prev) => ({ ...prev, create: true }));
       const res = await roleApi.create(body);
       if (res) {
-        message.success("Thêm mới chi nhánh thành công");
+        message.success("Thêm mới vai trò thành công");
         navigate(-1);
         success && success(res);
       }
@@ -76,6 +82,7 @@ const useRoleService = () => {
         message.success("Chỉnh sửa chi nhánh thành công");
         navigate(-1);
         success(res);
+        dispatch(keyActions.changeKey({ ...key, role: `role_${func.renderCode()}` }));
       }
       setLoading((prev) => ({ ...prev, edit: false }));
     } catch (error) {
@@ -94,19 +101,32 @@ const useRoleService = () => {
     } catch (error) {}
   };
 
-  const findRole = async (query: any, success: (data: ResPagination<IRole>) => void) => {
+  const deleteRole = async (id: string, success: SuccessFunc<IRole>) => {
+    setLoading((prev) => ({ ...prev, detail: true }));
     try {
-      setLoading((prev) => ({ ...prev, find: true }));
-      const res = await roleApi.find(query);
+      const res = await roleApi.delete(id);
       if (res) {
         success(res);
+        message.success(t("Xóa vai trò thành công!"));
+        dispatch(keyActions.changeKey({ ...key, role: `role_${func.renderCode()}` }));
       }
-      setLoading((prev) => ({ ...prev, find: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, find: false }));
-    }
+      setLoading((prev) => ({ ...prev, detail: false }));
+    } catch (error) {}
   };
-  return { loading, createRole, editRole, detailRole, findRole, columns };
+
+  const findRole = async (query: any, success: (data: ResPagination<IRole>) => void) => {
+    // try {
+    //   setLoading((prev) => ({ ...prev, find: true }));
+    //   const res = await roleApi.find();
+    //   if (res) {
+    //     success(res);
+    //   }
+    //   setLoading((prev) => ({ ...prev, find: false }));
+    // } catch (error) {
+    //   setLoading((prev) => ({ ...prev, find: false }));
+    // }
+  };
+  return { loading, createRole, editRole, detailRole, findRole, columns, deleteRole };
 };
 
 export default useRoleService;

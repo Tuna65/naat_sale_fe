@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import Text from "./Text";
 
 type Props = {
-  type: "ACTIVE" | "INACTIVE" | "PAID" | "UNPAID" | "IN_PROGRESS";
+  type: "ACTIVE" | "INACTIVE" | "PAID" | "UNPAID" | "IN_PROGRESS" | "COMPLETED";
 };
 
 const Status = (props: Props) => {
@@ -14,6 +14,13 @@ const Status = (props: Props) => {
       case "ACTIVE": {
         return {
           text: t("Active"),
+          border: "bg-green-100",
+          textColor: "text-green-500",
+        };
+      }
+      case "COMPLETED": {
+        return {
+          text: t("Hoàn thành"),
           border: "bg-green-100",
           textColor: "text-green-500",
         };

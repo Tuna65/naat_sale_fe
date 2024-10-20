@@ -9,3 +9,7 @@ export { ReactComponent as IconAccount } from "./icon/icon-account.svg";
 export { ReactComponent as IconRevenue } from "./icon/icon-revenue.svg";
 export { ReactComponent as IconLocation } from "./icon/icon-location.svg";
 export { ReactComponent as IconRole } from "./icon/icon-role.svg";
+export { ReactComponent as IconSale } from "./icon/icon-sale.svg";
+export { ReactComponent as IconHomeFill } from "./icon/icon-home-fill.svg";
+export { ReactComponent as IconUserFill } from "./icon/icon-user-fill.svg";
+export { ReactComponent as IconLocationFill } from "./icon/icon-location-fill.svg";

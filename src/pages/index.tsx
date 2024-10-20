@@ -36,15 +36,45 @@ export const EditPackage = () => LazyLayout(() => import("./package/EditPackage"
 export const Location = () => LazyLayout(() => import("./location"));
 export const Role = () => LazyLayout(() => import("./role"));
 export const ProductGroup = () => LazyLayout(() => import("./productGroup"));
+export const CreateRole = () => LazyLayout(() => import("./role/CreateRole"));
+export const CreateProduct = () => LazyLayout(() => import("./product/CreateProduct"));
+export const EditProduct = () => LazyLayout(() => import("./product/EditProduct"));
+export const ProductDetail = () => LazyLayout(() => import("./product/ProductDetail"));
+export const Pos = () => LazyLayout(() => import("./pos"));
+export const OrderDetail = () => LazyLayout(() => import("./order/OrderDetail"));
 
 export const routerList: TRouterList[] = [
   {
-    component: <ProductGroup />,
-    path: PATHNAME.PRODUCT_GROUP.INDEX,
+    component: <OrderDetail />,
+    path: PATHNAME.ORDER.DETAIL,
+  },
+  {
+    component: <ProductDetail />,
+    path: PATHNAME.PRODUCT.DETAIL,
+  },
+  {
+    component: <EditProduct />,
+    path: PATHNAME.PRODUCT.EDIT,
+  },
+  {
+    component: <CreateProduct />,
+    path: PATHNAME.PRODUCT.CREATE,
+  },
+  {
+    component: <Product />,
+    path: PATHNAME.PRODUCT.INDEX,
+  },
+  {
+    component: <CreateRole />,
+    path: PATHNAME.ROLE.CREATE,
   },
   {
     component: <Role />,
     path: PATHNAME.ROLE.INDEX,
+  },
+  {
+    component: <ProductGroup />,
+    path: PATHNAME.PRODUCT_GROUP.INDEX,
   },
   {
     component: <Location />,
@@ -73,9 +103,5 @@ export const routerList: TRouterList[] = [
   {
     component: <Dashboard />,
     path: PATHNAME.DASHBOARD,
-  },
-  {
-    component: <Product />,
-    path: PATHNAME.PRODUCT.INDEX,
   },
 ];

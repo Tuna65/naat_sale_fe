@@ -4,7 +4,7 @@ export interface ITextProps {
   onClick?: VoidFunc;
   className?: string;
   children: any;
-  type:
+  type?:
     | "CAPTION4"
     | "CAPTION3"
     | "CAPTION2"

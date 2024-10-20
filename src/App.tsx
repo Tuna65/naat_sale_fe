@@ -5,7 +5,7 @@ import "./App.css";
 import ComingSoon from "./components/ComingSoon";
 import Layout from "./layout/Layout";
 import ProtectedRoute from "./layout/ProtectedRoute";
-import { CreatePackage, EditPackage, EditShop, Login, Package, Register, Shop, routerList } from "./pages";
+import { CreatePackage, EditPackage, EditShop, Login, Package, Pos, Register, Shop, routerList } from "./pages";
 import LoginLayout from "./pages/auth";
 import CreateShop from "./pages/shop/CreateShop";
 import { configAntdProvider } from "./utils";
@@ -24,6 +24,7 @@ function App() {
               <Route path={PATHNAME.AUTH.REGISTER} element={<Register />} />
             </Route>
             <Route element={<ProtectedRoute />}>
+              <Route path={PATHNAME.SALE} element={<Pos />} />
               <Route element={<Layout />}>
                 {routerList.map((r, index) => {
                   return <Route path={r.path} element={r.component} key={`router-${index}`} />;

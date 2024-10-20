@@ -1,22 +1,17 @@
 import PageContainer from "@/components/PageContainer";
-import Text from "@/components/Text";
 import UploadFile from "@/components/UploadFile";
 import { useTitle } from "@/hooks/useTitle";
-import useGlobalService from "@/utils/useGlobalService";
-import { Button, Col, Flex, Form, Input, Row, Select } from "antd";
+import { Button, Col, Flex, Form, Row } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import useAccountService from "./useAccountService";
-import CFormInfo from "./components/CFormInfo";
 import CFormAddress from "./components/CFormAddress";
+import CFormInfo from "./components/CFormInfo";
+import useAccountService from "./useAccountService";
 
-type Props = {};
-
-const CreatAccount = (props: Props) => {
+const CreatAccount = () => {
   const { t } = useTranslation();
   useTitle(t("Thêm nhân viên"));
   const { create, loading } = useAccountService();
-  const { rulesForm } = useGlobalService();
   const [form] = Form.useForm();
 
   const onFinish = (v: any) => {
@@ -39,16 +34,16 @@ const CreatAccount = (props: Props) => {
             <Flex vertical gap={6}>
               <CFormInfo />
 
-              <Flex vertical gap={8}>
+              {/* <Flex vertical gap={8}>
                 <Text type="TITLE3">{t("Vai trò")}</Text>
                 <Row gutter={[12, 0]}>
                   <Col span={8}>
                     <Form.Item label={t("Vai trò")} name="roleId">
-                      <Select placeholder={t("Chọn vai trò")} />
+                      <InfinityScroll placeholder={t("Chọn vai trò")} keyValue={key.role} apiFunc={roleApi.find} />
                     </Form.Item>
                   </Col>
                 </Row>
-              </Flex>
+              </Flex> */}
 
               <CFormAddress />
             </Flex>

@@ -1,14 +1,14 @@
 import { IconGoogle } from "@/assets/Icon";
+import Container from "@/components/Container";
 import Text from "@/components/Text";
+import { STORAGE } from "@/configs/storage";
+import { cookieStorageUtil } from "@/service/storage";
+import { PATHNAME } from "@/utils/Pathname";
 import { Button, Flex, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import useAuthService from "./useAuthService";
 import { useNavigate } from "react-router-dom";
-import { PATHNAME } from "@/utils/Pathname";
-import { cookieStorageUtil } from "@/service/storage";
-import { STORAGE } from "@/configs/storage";
-import Container from "@/components/Container";
+import useAuthService from "./useAuthService";
 
 interface ILoginProps {}
 
@@ -24,6 +24,7 @@ const Login = (props: ILoginProps) => {
   useEffect(() => {
     if (token) naviage(PATHNAME.DASHBOARD);
   }, []);
+
   return (
     <Container>
       {!token && (

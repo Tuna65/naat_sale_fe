@@ -1,5 +1,6 @@
 import { ResPagination } from "@/models";
 import { ILocation } from "@/models/location";
+import { IQuery } from "@/types";
 
 import { message } from "antd";
 import http from "./http";
@@ -10,6 +11,14 @@ export const locationApi = {
   async find(): Promise<ResPagination<ILocation> | any> {
     try {
       const res = await http.get(`${path}`);
+      return res.data;
+    } catch (error: any) {
+      message.error(error?.data?.message ?? error?.data?.message[0]);
+    }
+  },
+  async query(params?: IQuery): Promise<ResPagination<ILocation> | any> {
+    try {
+      const res = await http.get(`${path}`, { params: params?.queryKey[1] });
       return res.data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);

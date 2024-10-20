@@ -7,6 +7,8 @@ import { IRole } from "@/models/role";
 import { IUser } from "@/models/user";
 import { cookieStorageUtil } from "@/service/storage";
 import { authActions } from "@/store/modules/auth";
+import { keyActions } from "@/store/modules/tanstackKey";
+import { keySelector } from "@/store/modules/tanstackKey/selector";
 import { IBaseLoading } from "@/types";
 import { IQueryAccount } from "@/types/account";
 import { baseLoading } from "@/utils";
@@ -16,13 +18,14 @@ import { EditOutlined } from "@ant-design/icons";
 import { Avatar, Button, Flex, message } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const useAccountService = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const key = useSelector(keySelector);
 
   const rulesForm = {
     name: [
@@ -145,7 +148,6 @@ const useAccountService = () => {
       setLoading((prev) => ({ ...prev, create: false }));
     }
   };
-
   const editAccount = async (id: string, body: IUser) => {
     setLoading((prev) => ({ ...prev, edit: true }));
     try {
@@ -153,6 +155,7 @@ const useAccountService = () => {
       if (res) {
         message.success("Chỉnh sửa nhân viên thành công");
         navigate(-1);
+        dispatch(keyActions.changeKey({ ...key, account: `account_${func.renderCode()}` }));
       }
       setLoading((prev) => ({ ...prev, edit: false }));
     } catch (error) {
@@ -190,6 +193,22 @@ const useAccountService = () => {
     }
   };
 
+  const deleteAccount = async (id: string, success?: SuccessFunc<IUser>) => {
+    setLoading((prev) => ({ ...prev, detail: true }));
+    try {
+      const res = await accountApi.delete(id);
+      if (res) {
+        success && success(res);
+        dispatch(authActions.setUser(res));
+        message.error("Xóa nhân viên thành công");
+        dispatch(keyActions.changeKey({ ...key, account: `account_${func.renderCode()}` }));
+      }
+      setLoading((prev) => ({ ...prev, detail: false }));
+    } catch (error) {
+      setLoading((prev) => ({ ...prev, detail: false }));
+    }
+  };
+
   const findAccount = async (query: IQueryAccount, success: (data: ResPagination<IUser>) => void) => {
     try {
       setLoading((prev) => ({ ...prev, find: true }));
@@ -202,7 +221,7 @@ const useAccountService = () => {
       setLoading((prev) => ({ ...prev, find: false }));
     }
   };
-  return { columns, rulesForm, loading, create, detailToken, findAccount, detailAccount, editAccount };
+  return { deleteAccount, columns, rulesForm, loading, create, detailToken, findAccount, detailAccount, editAccount };
 };
 
 export default useAccountService;

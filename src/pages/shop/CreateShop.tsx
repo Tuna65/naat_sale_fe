@@ -8,9 +8,7 @@ import useShopService from "./useShopService";
 const CreateShop = (props: ICreateShopProps) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-
   const { ruleForm, createShop } = useShopService();
-
   const onFinish = (v: any) => createShop(v);
 
   return (
