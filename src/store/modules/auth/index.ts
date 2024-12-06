@@ -17,9 +17,11 @@ const { actions, reducer: authReducer } = createSlice({
     transferTitle(state, action: PayloadAction<string>) {
       state.title = action.payload;
     },
+    
     setUser(state, action: PayloadAction<any>) {
       state.user = action.payload;
     },
+
     clear() {
       return { ...initialState, isInit: true };
     },

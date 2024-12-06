@@ -5,15 +5,7 @@ import Text from "./Text";
 
 interface IContainerProps {
   isLoading?: boolean;
-  type?:
-    | "INPUT"
-    | "CIRCLE"
-    | "TABLE"
-    | "IMAGE"
-    | "CARD"
-    | "NODE"
-    | "PRODUCT_LIST"
-    | "SPIN";
+  type?: "INPUT" | "CIRCLE" | "TABLE" | "IMAGE" | "CARD" | "NODE" | "PRODUCT_LIST" | "SPIN";
   children: ReactNode;
 }
 
@@ -50,21 +42,20 @@ const Container = (props: IContainerProps) => {
         return (
           <div className="flex gap-6 justify-center flex-col h-[300px] items-center bg-white shadow-box">
             <Spin></Spin>
-            <Text type='TITLE4'>{'Loading ...'}</Text>
+            <Text type="TITLE4">{"Loading ..."}</Text>
           </div>
         );
       default:
-        <div className="w-[120px]">
-          <Skeleton.Input active />;
-        </div>;
+        return (
+          <div className="flex gap-6 justify-center flex-col h-[300px] items-center bg-white shadow-box">
+            <Spin></Spin>
+            <Text type="TITLE4">{"Loading ..."}</Text>
+          </div>
+        );
     }
   }, [type]);
 
-  return (
-    <div>
-      {isLoading ? loadingSkeleton : <div className="">{children}</div>}
-    </div>
-  );
+  return <div>{isLoading ? loadingSkeleton : <div className="">{children}</div>}</div>;
 };
 
 export default React.memo(Container);

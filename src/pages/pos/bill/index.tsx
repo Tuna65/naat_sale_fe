@@ -7,6 +7,7 @@ import SubmitOrder from "./SubmitOrder";
 
 const BillInfo = () => {
   const { t } = useTranslation();
+  
   return (
     <Flex className="h-full pr-3" vertical>
       <Flex className="w-full h-full my-3 rounded-lg shadow-box bg-white" vertical justify="space-between">

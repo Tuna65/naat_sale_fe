@@ -1,15 +1,13 @@
-import { IconAccount, IconOrder, IconPieChart, IconProduct } from "@/assets/Icon";
 import Text from "@/components/Text";
-import { PATHNAME } from "@/utils/Pathname";
-import { Flex, Image, Menu, MenuProps } from "antd";
+import { Flex, Image, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
-
+import logo from "@/assets/images/naat_logo.jpg";
 import { sidebarSelector } from "@/store/modules/sidebar/selector";
-import { useSelector } from "react-redux";
 import { func } from "@/utils/func";
 import useGlobalService from "@/utils/useGlobalService";
+import { useSelector } from "react-redux";
 
 const Layout = () => {
   const { pathname } = useLocation();
@@ -36,11 +34,14 @@ const Layout = () => {
             justify="center"
             align="center"
           >
-            {openSidebar ? (
-              <Image className="rounded-lg" width={48} height={48} src={func.avatar("Nhím Store", "")} />
+            {!openSidebar ? (
+              <Flex className="">
+                <Image className="rounded-lg" width={120} height={50} src={logo} />
+                {/* <img src={logo} alt="" className="h-full" /> */}
+              </Flex>
             ) : (
               <Text type="TITLE1" className="text-primary">
-                {"Nhím Store"}
+                {"NAAT"}
               </Text>
             )}
           </Flex>

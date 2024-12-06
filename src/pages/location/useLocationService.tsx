@@ -5,8 +5,8 @@ import { ResPagination, SuccessFunc } from "@/models";
 import { ILocation } from "@/models/location";
 import { IBaseLoading } from "@/types";
 import { baseLoading } from "@/utils";
-import { CheckCircleTwoTone, EditOutlined } from "@ant-design/icons";
-import { Button, Flex, message } from "antd";
+import { CheckCircleTwoTone, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Button, Flex, Tooltip, message } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -59,7 +59,14 @@ const useLocationService = () => {
       key: "action",
       render: (address: any, record: ILocation) => (
         <Flex justify="center">
-          <Button type="text" icon={<EditOutlined />} onClick={() => onEdit(record)} />
+          <Tooltip title={t("Sửa")}>
+            <Button type="text" icon={<EditOutlined />} onClick={() => onEdit(record)} />
+          </Tooltip>
+          {!record.isDefault && (
+            <Tooltip title={t("Xóa")}>
+              <Button type="text" icon={<DeleteOutlined />} onClick={() => onEdit(record)} />
+            </Tooltip>
+          )}
         </Flex>
       ),
     },
