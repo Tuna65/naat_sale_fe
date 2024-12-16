@@ -58,22 +58,6 @@ const useRoleService = () => {
 
   const [loading, setLoading] = useState<IBaseLoading>(baseLoading);
 
-  const createRole = async (body: IRole, success?: SuccessFunc<IRole>) => {
-    setLoading((prev) => ({ ...prev, create: true }));
-    try {
-      setLoading((prev) => ({ ...prev, create: true }));
-      const res = await roleApi.create(body);
-      if (res) {
-        message.success("Thêm mới vai trò thành công");
-        navigate(-1);
-        success && success(res);
-      }
-      setLoading((prev) => ({ ...prev, create: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, create: false }));
-    }
-  };
-
   const editRole = async (id: string, body: IRole, success: SuccessFunc<IRole>) => {
     setLoading((prev) => ({ ...prev, edit: true }));
     try {
@@ -114,19 +98,7 @@ const useRoleService = () => {
     } catch (error) {}
   };
 
-  const findRole = async (query: any, success: (data: ResPagination<IRole>) => void) => {
-    // try {
-    //   setLoading((prev) => ({ ...prev, find: true }));
-    //   const res = await roleApi.find();
-    //   if (res) {
-    //     success(res);
-    //   }
-    //   setLoading((prev) => ({ ...prev, find: false }));
-    // } catch (error) {
-    //   setLoading((prev) => ({ ...prev, find: false }));
-    // }
-  };
-  return { loading, createRole, editRole, detailRole, findRole, columns, deleteRole };
+  return { loading, editRole, detailRole, columns, deleteRole };
 };
 
 export default useRoleService;

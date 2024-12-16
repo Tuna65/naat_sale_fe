@@ -118,51 +118,7 @@ const useProductService = () => {
     },
   ];
 
-  const [loading, setLoading] = useState<IBaseLoading>(baseLoading);
-
-  const createProduct = async (body: IProduct) => {
-    setLoading((prev) => ({ ...prev, create: true }));
-    try {
-      const res = await productApi.create(body);
-      if (res) {
-        message.success("Thêm mới sản phẩm thành công!");
-        navigate(-1);
-      }
-      setLoading((prev) => ({ ...prev, create: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, create: false }));
-    }
-  };
-
-  const editProduct = async (id: string, body: IProduct) => {
-    console.log(body);
-    setLoading((prev) => ({ ...prev, edit: true }));
-    try {
-      const res = await productApi.edit(body, id);
-      if (res) {
-        message.success("Chỉnh sửa sản phẩm thành công!");
-        navigate(-1);
-        dispatch(keyActions.changeKey({ ...key, product: `product_${func.renderCode()}` }));
-      }
-      setLoading((prev) => ({ ...prev, edit: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, edit: false }));
-    }
-  };
-
-  const detailProduct = async (id: string, success: SuccessFunc<IProduct>) => {
-    setLoading((prev) => ({ ...prev, detail: true }));
-    try {
-      const res = await productApi.detail(id);
-      if (res) {
-        success(res);
-      }
-      setLoading((prev) => ({ ...prev, detail: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, detail: false }));
-    }
-  };
-  return { columns, createProduct, editProduct, detailProduct, loading };
+  return { columns };
 };
 
 export default useProductService;

@@ -15,6 +15,7 @@ const ProtectedRoute = () => {
     if (!token) naviage(PATHNAME.AUTH.LOGIN);
     token && detailToken();
   }, []);
+  
   return (
     <div>
       <Outlet />

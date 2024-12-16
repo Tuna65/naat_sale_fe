@@ -9,8 +9,6 @@ const path = `/account` as const;
 
 export const accountApi = {
   async find(params?: IQueryAccount): Promise<ResPagination<IUser> | any> {
-    console.log(params);
-
     try {
       const res = await http.get(`${path}`, { params: params?.queryKey[1] });
       return res.data;

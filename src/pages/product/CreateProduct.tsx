@@ -1,23 +1,34 @@
+import { productApi } from "@/apis/product";
 import PageContainer from "@/components/PageContainer";
 import Text from "@/components/Text";
-import { Button, Col, Flex, Form, Row } from "antd";
+import useAsync from "@/hooks/useApi";
+import { Button, Col, Flex, Form, Row, message } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import CImage from "./components/CImage";
 import CInventory from "./components/CInventory";
 import GeneralInfo from "./components/GeneralInfo";
-import useProductService from "./useProductService";
 
 const CreateProduct = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const { createProduct, loading } = useProductService();
+  const navigate = useNavigate();
+
+  const { execute: createProduct, loading } = useAsync(productApi.create, {
+    onSucess: (_response: any) => {
+      message.success("Thêm mới sản phẩm thành công!");
+      navigate(-1);
+    },
+    onFailed: (_error) => {},
+  });
+
   const onFinish = (v: any) => createProduct(v);
 
   return (
     <PageContainer
       actions={
-        <Button type="primary" onClick={() => form.submit()} loading={loading.create}>
+        <Button type="primary" onClick={() => form.submit()} loading={loading}>
           {t("Lưu")}
         </Button>
       }

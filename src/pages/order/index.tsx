@@ -15,9 +15,7 @@ import { orderApi } from "@/apis/order";
 import { useNavigate } from "react-router-dom";
 import { PATHNAME } from "@/utils/Pathname";
 
-type Props = {};
-
-const Order = (props: Props) => {
+const Order = () => {
   const { t } = useTranslation();
   useTitle(t("Đơn hàng"));
   const { params, onParams } = useSearchQuery();

@@ -2,15 +2,12 @@ import { accountApi } from "@/apis/account";
 import Status from "@/components/Status";
 import Text from "@/components/Text";
 import { STORAGE } from "@/configs/storage";
-import { ResPagination, SuccessFunc } from "@/models";
 import { IRole } from "@/models/role";
 import { IUser } from "@/models/user";
 import { cookieStorageUtil } from "@/service/storage";
 import { authActions } from "@/store/modules/auth";
-import { keyActions } from "@/store/modules/tanstackKey";
 import { keySelector } from "@/store/modules/tanstackKey/selector";
 import { IBaseLoading } from "@/types";
-import { IQueryAccount } from "@/types/account";
 import { baseLoading } from "@/utils";
 import { PATHNAME } from "@/utils/Pathname";
 import { func } from "@/utils/func";
@@ -132,36 +129,7 @@ const useAccountService = () => {
     },
   ];
 
-  const [loading, setLoading] = useState<IBaseLoading>(baseLoading);
-
-  const create = async (body: IUser) => {
-    setLoading((prev) => ({ ...prev, create: true }));
-    try {
-      setLoading((prev) => ({ ...prev, create: true }));
-      const res = await accountApi.create(body);
-      if (res) {
-        message.success("Thêm mới nhân viên thành công");
-        navigate(-1);
-      }
-      setLoading((prev) => ({ ...prev, create: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, create: false }));
-    }
-  };
-  const editAccount = async (id: string, body: IUser) => {
-    setLoading((prev) => ({ ...prev, edit: true }));
-    try {
-      const res = await accountApi.update(id, body);
-      if (res) {
-        message.success("Chỉnh sửa nhân viên thành công");
-        navigate(-1);
-        dispatch(keyActions.changeKey({ ...key, account: `account_${func.renderCode()}` }));
-      }
-      setLoading((prev) => ({ ...prev, edit: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, edit: false }));
-    }
-  };
+  const [loading, _setLoading] = useState<IBaseLoading>(baseLoading);
 
   const detailToken = async () => {
     try {
@@ -175,53 +143,7 @@ const useAccountService = () => {
     }
   };
 
-  const detailAccount = async (id: string, success: SuccessFunc<IUser>) => {
-    setLoading((prev) => ({ ...prev, detail: true }));
-    try {
-      const res = await accountApi.detail(id);
-      if (res) {
-        success(res);
-        dispatch(authActions.setUser(res));
-      }
-      setLoading((prev) => ({ ...prev, detail: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, detail: false }));
-      navigate(PATHNAME.AUTH.LOGIN);
-      dispatch(authActions.clear());
-      cookieStorageUtil.remove(STORAGE.NAAT_TOKEN_KEY);
-      message.error("Token hết hạn hoặc không hợp lệ");
-    }
-  };
-
-  const deleteAccount = async (id: string, success?: SuccessFunc<IUser>) => {
-    setLoading((prev) => ({ ...prev, detail: true }));
-    try {
-      const res = await accountApi.delete(id);
-      if (res) {
-        success && success(res);
-        dispatch(authActions.setUser(res));
-        message.error("Xóa nhân viên thành công");
-        dispatch(keyActions.changeKey({ ...key, account: `account_${func.renderCode()}` }));
-      }
-      setLoading((prev) => ({ ...prev, detail: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, detail: false }));
-    }
-  };
-
-  const findAccount = async (query: IQueryAccount, success: (data: ResPagination<IUser>) => void) => {
-    try {
-      setLoading((prev) => ({ ...prev, find: true }));
-      const res = await accountApi.find(query);
-      if (res) {
-        success(res);
-      }
-      setLoading((prev) => ({ ...prev, find: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, find: false }));
-    }
-  };
-  return { deleteAccount, columns, rulesForm, loading, create, detailToken, findAccount, detailAccount, editAccount };
+  return { columns, rulesForm, loading, detailToken };
 };
 
 export default useAccountService;

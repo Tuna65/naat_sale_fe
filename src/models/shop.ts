@@ -8,8 +8,9 @@ export interface IShop extends IBaseEntity {
   phone: string;
   image: string;
   packageId: string;
-  address: Date;
-  city: Date;
-  district: Date;
-  ward: Date;
+  address: string;
+  city: string;
+  district: string;
+  ward: string;
+  expiredDate: Date;
 }

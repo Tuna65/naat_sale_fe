@@ -1,19 +1,19 @@
+import { shopApi } from "@/apis/shop";
 import BoxTable from "@/components/BoxTable";
 import Text from "@/components/Text";
 import { useSearchQuery } from "@/hooks/useQuery";
-import { ResPagination } from "@/models";
-import { IShop } from "@/models/shop";
-import { defaultResPage } from "@/utils";
-import React, { useEffect, useState } from "react";
+import { keySelector } from "@/store/modules/tanstackKey/selector";
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import useShopService from "./useShopService";
 
 const Shop = () => {
-  const { findShop, columns, loading } = useShopService();
+  const { columns } = useShopService();
   const { params, onParams } = useSearchQuery();
   const { t } = useTranslation();
-
-  const [data, setData] = useState<ResPagination<IShop>>(defaultResPage);
+  const key = useSelector(keySelector);
 
   useEffect(() => {
     if (!params.page) {
@@ -21,19 +21,19 @@ const Shop = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const query: any = {
-      page: params.page?.toString(),
-      limit: params.limit?.toString(),
-      name: params.name?.toString(),
-    };
-    params.page && findShop(query, (data) => setData(data));
-  }, []);
+  const { data, isFetching, isLoading } = useQuery({
+    queryKey: [key.shop, params],
+    queryFn: shopApi.find,
+    staleTime: 600000,
+    enabled: !!Object.values(params)?.length,
+    retry: 1,
+  });
+
   return (
     <div className="flex flex-col gap-10 p-6">
       <Text type="H3">{t("Danh sách cửa hàng")}</Text>
       <div className="">
-        <BoxTable data={data} columns={columns as any} isLoading={loading.find} />
+        <BoxTable data={data} columns={columns as any} isLoading={isLoading} />
       </div>
     </div>
   );

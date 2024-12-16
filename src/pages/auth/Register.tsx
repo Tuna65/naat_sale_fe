@@ -1,22 +1,29 @@
+import { accountApi } from "@/apis/account";
 import { IconGoogle } from "@/assets/Icon";
 import Text from "@/components/Text";
 import { STORAGE } from "@/configs/storage";
+import useAsync from "@/hooks/useApi";
 import { cookieStorageUtil } from "@/service/storage";
 import { PATHNAME } from "@/utils/Pathname";
 import { Button, Flex, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import useUserService from "../account/useAccountService";
 import useAuthService from "./useAuthService";
-interface IRegisterProps {}
 
-const Register = (props: IRegisterProps) => {
+const Register = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const { rulesForm } = useAuthService();
-  const { create, loading } = useUserService();
   const navigate = useNavigate();
+
+  const { execute: create, loading } = useAsync(accountApi.create, {
+    onSucess: (_response: any) => {
+      navigate(-1);
+    },
+    onFailed: (_error) => {},
+  });
+
   const onFinish = (v: any) => {
     v.shopId = "a1f63599-52e7-4629-8523-cfdc1c5c0d61";
     create(v);
@@ -43,13 +50,7 @@ const Register = (props: IRegisterProps) => {
         </Form.Item>{" "}
       </Form>
       <Flex align="center" gap={20}>
-        <Button
-          type="primary"
-          loading={loading.create}
-          onClick={() => form.submit()}
-          size="large"
-          className="flex-1 h-16"
-        >
+        <Button type="primary" loading={loading} onClick={() => form.submit()} size="large" className="flex-1 h-16">
           {t("Sign in")}
         </Button>
         <div className="cursor-pointer">

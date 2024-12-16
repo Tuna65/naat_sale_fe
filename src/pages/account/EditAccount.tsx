@@ -1,27 +1,25 @@
+import { accountApi } from "@/apis/account";
+import { roleApi } from "@/apis/role";
+import InfinityScroll from "@/components/InfinityScroll";
 import PageContainer from "@/components/PageContainer";
 import Text from "@/components/Text";
 import UploadFile from "@/components/UploadFile";
 import { EStatus } from "@/enum/EStatus";
+import useAsync from "@/hooks/useApi";
 import { useTitle } from "@/hooks/useTitle";
 import { IUser } from "@/models/user";
-import useGlobalService from "@/utils/useGlobalService";
-import { Button, Col, Flex, Form, Row, Select, Switch } from "antd";
+import { keySelector } from "@/store/modules/tanstackKey/selector";
+import { Button, Col, Flex, Form, Row, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import CFormAddress from "./components/CFormAddress";
 import CFormInfo from "./components/CFormInfo";
-import useAccountService from "./useAccountService";
-import InfinityScroll from "@/components/InfinityScroll";
-import { roleApi } from "@/apis/role";
-import { keySelector } from "@/store/modules/tanstackKey/selector";
-import { useSelector } from "react-redux";
 
 const EditAccount = () => {
   const { t } = useTranslation();
   useTitle(t("Chỉnh sửa nhân viên"));
-  const { editAccount, loading, detailAccount } = useAccountService();
-  const { rulesForm } = useGlobalService();
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -29,8 +27,22 @@ const EditAccount = () => {
 
   const [detailData, setDetailData] = useState<IUser>();
 
+  const { execute: editAccount, loading } = useAsync(accountApi.update, {
+    onSucess: (_response: any) => {
+      navigate(-1);
+    },
+    onFailed: (_error) => {},
+  });
+
+  const { execute: detailAccount, loading: _loadingDetail } = useAsync(accountApi.update, {
+    onSucess: (response: any) => {
+      setDetailData(response.data);
+    },
+    onFailed: (_error) => {},
+  });
+
   useEffect(() => {
-    id && detailAccount(id, (data) => setDetailData(data));
+    id && detailAccount(id);
   }, []);
 
   const onFinish = (v: IUser) => {
@@ -45,7 +57,7 @@ const EditAccount = () => {
           <Button type="default" onClick={() => navigate(-1)}>
             {t("Hủy")}
           </Button>
-          <Button loading={loading.edit} type="primary" onClick={() => form.submit()}>
+          <Button loading={loading} type="primary" onClick={() => form.submit()}>
             {t("Lưu")}
           </Button>
         </Flex>

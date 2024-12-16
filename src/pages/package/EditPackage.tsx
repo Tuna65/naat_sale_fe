@@ -1,25 +1,41 @@
+import { packageApi } from "@/apis/package";
 import NumbericInput from "@/components/NumbericInput";
 import Text from "@/components/Text";
+import useAsync from "@/hooks/useApi";
+import { IPackage } from "@/models/package";
 import { OptionPackage } from "@/utils/option";
 import useGlobalService from "@/utils/useGlobalService";
-import { Button, Col, Flex, Form, Input, Row, Select } from "antd";
+import { Button, Col, Flex, Form, Input, Row, Select, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import usePackageService from "./usePackageService";
-import { useParams } from "react-router-dom";
-import { IPackage } from "@/models/package";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditPackage = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const { editPackage, loading, detailPackage } = usePackageService();
   const { rulesForm } = useGlobalService();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [detailData, setDetailData] = useState<IPackage>();
 
+  const { execute: editPackage, loading } = useAsync(packageApi.edit, {
+    onSucess: (_response: any) => {
+      message.success("Sửa gói thành công!");
+      navigate(-1);
+    },
+    onFailed: (_error) => {},
+  });
+
+  const { execute: detailPackage, loading: _loadingDetail } = useAsync(packageApi.detail, {
+    onSucess: (response: any) => {
+      setDetailData(response.data);
+    },
+    onFailed: (_error) => {},
+  });
+
   useEffect(() => {
-    id && detailPackage(id, (data) => setDetailData(data));
+    id && detailPackage(id);
   }, []);
 
   const onFinish = (v: any) => editPackage(v, id ?? "");
@@ -58,7 +74,7 @@ const EditPackage = () => {
         </Form>
       )}
 
-      <Button onClick={() => form.submit()} loading={loading.edit} type="primary">
+      <Button onClick={() => form.submit()} loading={loading} type="primary">
         {t("Lưu")}
       </Button>
     </Flex>

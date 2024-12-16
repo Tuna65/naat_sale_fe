@@ -63,47 +63,6 @@ const usePackageService = () => {
     },
   ];
 
-  const createPackage = async (body: IPackage) => {
-    setLoading((prev) => ({ ...prev, create: true }));
-    try {
-      const res = await packageApi.create(body);
-      if (res) {
-        message.success("Thêm gói thành công!");
-        navigate(-1);
-      }
-      setLoading((prev) => ({ ...prev, create: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, create: false }));
-    }
-  };
-
-  const findPackage = async (query: any, success: (data: ResPagination<IPackage>) => void) => {
-    setLoading((prev) => ({ ...prev, find: true }));
-    try {
-      const res = await packageApi.find(query);
-      if (res) {
-        success(res);
-      }
-      setLoading((prev) => ({ ...prev, find: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, find: false }));
-    }
-  };
-
-  const editPackage = async (body: IPackage, id: string) => {
-    setLoading((prev) => ({ ...prev, edit: true }));
-    try {
-      const res = await packageApi.edit(body, id);
-      if (res) {
-        message.success("Sửa gói thành công!");
-        navigate(-1);
-      }
-      setLoading((prev) => ({ ...prev, edit: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, edit: false }));
-    }
-  };
-
   const deletePackage = async (id: string) => {
     setLoading((prev) => ({ ...prev, delete: true }));
     try {
@@ -117,19 +76,7 @@ const usePackageService = () => {
     }
   };
 
-  const detailPackage = async (id: string, success: SuccessFunc<IPackage>) => {
-    setLoading((prev) => ({ ...prev, detail: true }));
-    try {
-      const res = await packageApi.detail(id);
-      if (res) {
-        success(res);
-      }
-      setLoading((prev) => ({ ...prev, detail: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, detail: false }));
-    }
-  };
-  return { columns, loading, createPackage, findPackage, editPackage, deletePackage, detailPackage };
+  return { columns, loading, deletePackage };
 };
 
 export default usePackageService;

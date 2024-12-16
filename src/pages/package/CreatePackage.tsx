@@ -1,18 +1,30 @@
+import { packageApi } from "@/apis/package";
 import NumbericInput from "@/components/NumbericInput";
 import Text from "@/components/Text";
+import useAsync from "@/hooks/useApi";
 import { OptionPackage } from "@/utils/option";
 import useGlobalService from "@/utils/useGlobalService";
-import { Button, Col, Flex, Form, Input, Row, Select } from "antd";
+import { Button, Col, Flex, Form, Input, Row, Select, message } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import usePackageService from "./usePackageService";
+import { useNavigate } from "react-router-dom";
 
 const CreatePackage = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const { createPackage, loading } = usePackageService();
   const { rulesForm } = useGlobalService();
+  const navigate = useNavigate();
+
+  const { execute: createPackage, loading } = useAsync(packageApi.create, {
+    onSucess: (_response: any) => {
+      message.success("Thêm gói thành công!");
+      navigate(-1);
+    },
+    onFailed: (_error) => {},
+  });
+
   const onFinish = (v: any) => createPackage(v);
+
   return (
     <Flex className="w-[500px] p-6 m-auto mt-12 bg-white shadow-box" vertical gap={24}>
       <Text type="TITLE2" className="text-center">
@@ -46,7 +58,7 @@ const CreatePackage = () => {
         </Row>
       </Form>
 
-      <Button onClick={() => form.submit()} loading={loading.create} type="primary">
+      <Button onClick={() => form.submit()} loading={loading} type="primary">
         {t("Thêm mới")}
       </Button>
     </Flex>

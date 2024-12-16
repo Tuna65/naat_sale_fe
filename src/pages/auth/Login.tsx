@@ -1,25 +1,38 @@
+import { authSaleApi } from "@/apis/auth";
 import { IconGoogle } from "@/assets/Icon";
 import Container from "@/components/Container";
 import Text from "@/components/Text";
 import { STORAGE } from "@/configs/storage";
+import useAsync from "@/hooks/useApi";
 import { cookieStorageUtil } from "@/service/storage";
+import { authActions } from "@/store/modules/auth";
 import { PATHNAME } from "@/utils/Pathname";
 import { Button, Flex, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useAuthService from "./useAuthService";
 
-interface ILoginProps {}
-
-const Login = (props: ILoginProps) => {
+const Login = () => {
   const { t } = useTranslation();
   const naviage = useNavigate();
   const [form] = Form.useForm();
-  const { rulesForm, login, loading } = useAuthService();
+  const { rulesForm } = useAuthService();
   const navigate = useNavigate();
-  const onFinish = (v: any) => login(v);
+  const dispatch = useDispatch();
   const token = cookieStorageUtil.get(STORAGE.NAAT_TOKEN_KEY);
+
+  const { execute: login, loading } = useAsync(authSaleApi.login, {
+    onSucess: (response: any) => {
+      dispatch(authActions.setUser(response.data));
+      navigate(PATHNAME.DASHBOARD);
+      cookieStorageUtil.set(response.data.accessToken, STORAGE.NAAT_TOKEN_KEY);
+    },
+    onFailed: (_error) => {},
+  });
+
+  const onFinish = (v: any) => login(v);
 
   useEffect(() => {
     if (token) naviage(PATHNAME.DASHBOARD);

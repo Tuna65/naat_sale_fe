@@ -17,6 +17,7 @@ const OrderDetail = () => {
   useEffect(() => {
     id && detailOrder(id, (data) => setDetailData(data));
   }, []);
+  
   return (
     <PageContainer>
       <Row gutter={[24, 24]}>

@@ -10,7 +10,6 @@ export const authSaleApi = {
       const res = await http.post(`${path}`, body);
       return res.data;
     } catch (error: any) {
-      console.log(error);
       const messages = error.data.message;
       message.error(messages);
     }

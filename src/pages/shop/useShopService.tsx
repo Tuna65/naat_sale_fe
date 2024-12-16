@@ -146,19 +146,6 @@ const useShopService = () => {
     }
   };
 
-  const findShop = async (query: QueryShop, success: (data: ResPagination<IShop>) => void) => {
-    setLoading((prev) => ({ ...prev, find: true }));
-    try {
-      const res = await shopApi.find(query);
-      if (res) {
-        success(res);
-      }
-      setLoading((prev) => ({ ...prev, find: false }));
-    } catch (error) {
-      setLoading((prev) => ({ ...prev, find: false }));
-    }
-  };
-
   const detailShop = async (id: string, success: SuccessFunc<IShop>) => {
     setLoading((prev) => ({ ...prev, detail: true }));
     try {
@@ -185,7 +172,7 @@ const useShopService = () => {
       setLoading((prev) => ({ ...prev, edit: false }));
     }
   };
-  return { ruleForm, createShop, findShop, columns, loading, editShop, detailShop, upPackage };
+  return { ruleForm, createShop, columns, loading, editShop, detailShop, upPackage };
 };
 
 export default useShopService;

@@ -1,27 +1,37 @@
+import { roleApi } from "@/apis/role";
 import PageContainer from "@/components/PageContainer";
+import useAsync from "@/hooks/useApi";
 import { useTitle } from "@/hooks/useTitle";
-import { Button, Flex, Form, Input } from "antd";
+import useGlobalService from "@/utils/useGlobalService";
+import { Button, Flex, Form, Input, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import CPermission from "./components/CPermission";
-import useRoleService from "./useRoleService";
-import useGlobalService from "@/utils/useGlobalService";
 import { useNavigate } from "react-router-dom";
+import CPermission from "./components/CPermission";
 
 const CreateRole = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   useTitle(t("Thêm mới vai trò"));
   const navigate = useNavigate();
-  const { createRole, loading } = useRoleService();
   const { rulesForm } = useGlobalService();
-  const onFinish = (v: any) => createRole(v, (v) => navigate(-1));
+
+  const { execute: createRole, loading } = useAsync(roleApi.create, {
+    onSucess: (_response: any) => {
+      message.success("Thêm mới thành công!");
+      navigate(-1);
+    },
+    onFailed: (_error) => {},
+  });
+
+  const onFinish = (v: any) => createRole(v);
+
   return (
     <PageContainer
       actions={
         <Flex>
-          <Button type="primary" onClick={() => form.submit()} loading={loading.create}>
+          <Button type="primary" onClick={() => form.submit()} loading={loading}>
             {t("Lưu")}
           </Button>
         </Flex>

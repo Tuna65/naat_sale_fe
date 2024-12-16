@@ -15,11 +15,11 @@ const Role = () => {
   const { t } = useTranslation();
   useTitle(t("Vai trò"));
   const { params } = useSearchQuery();
-  const { loading, columns } = useRoleService();
+  const { columns } = useRoleService();
   const navigate = useNavigate();
   const key = useSelector(keySelector);
 
-  const { isPending, error, data, isFetching, isLoading } = useQuery({
+  const { data, isFetching, isLoading } = useQuery({
     queryKey: [key.role, params],
     queryFn: roleApi.find,
     staleTime: 600000,
@@ -31,7 +31,7 @@ const Role = () => {
     <ContainerTablePage
       data={data as any}
       column={columns()}
-      loading={loading.find}
+      loading={isLoading}
       actionCreate={() => navigate(PATHNAME.ROLE.CREATE)}
     />
   );

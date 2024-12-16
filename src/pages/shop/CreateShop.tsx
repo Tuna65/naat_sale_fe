@@ -4,12 +4,21 @@ import { Button, Col, Form, Input, Row } from "antd";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import useShopService from "./useShopService";
+import useAsync from "@/hooks/useApi";
+import { shopApi } from "@/apis/shop";
 
 const CreateShop = (props: ICreateShopProps) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const { ruleForm, createShop } = useShopService();
-  const onFinish = (v: any) => createShop(v);
+  const { ruleForm } = useShopService();
+  const { execute: createShop, loading } = useAsync(shopApi.create, {
+    onSucess: (_response: any) => {},
+    onFailed: (_error) => {},
+  });
+
+  const onFinish = (v: any) => {
+    createShop(v);
+  };
 
   return (
     <div>
@@ -41,7 +50,7 @@ const CreateShop = (props: ICreateShopProps) => {
             <Input type="email" />
           </Form.Item>
         </Form>
-        <Button className="w-full" type="primary" size="large" onClick={() => form.submit()}>
+        <Button loading={loading} className="w-full" type="primary" size="large" onClick={() => form.submit()}>
           {t("Đăng ký")}
         </Button>
       </div>

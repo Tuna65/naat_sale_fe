@@ -11,15 +11,24 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import usePackageService from "./usePackageService";
+import useAsync from "@/hooks/useApi";
+import { packageApi } from "@/apis/package";
 
 const Package = () => {
   const { t } = useTranslation();
   const { params, onParams } = useSearchQuery();
   useTitle(t("Bảng giá gói"));
   const navigate = useNavigate();
-  const { columns, loading, findPackage } = usePackageService();
+  const { columns } = usePackageService();
 
   const [data, setData] = useState<ResPagination<IPackage>>(defaultResPage);
+
+  const { execute: findPackage, loading } = useAsync(packageApi.find, {
+    onSucess: (response: any) => {
+      setData(response.data);
+    },
+    onFailed: (_error) => {},
+  });
 
   useEffect(() => {
     if (!params.page) {
@@ -33,16 +42,18 @@ const Package = () => {
       limit: params.limit?.toString(),
       name: params.name?.toString(),
     };
-    params.page && findPackage(query, (v) => setData(v));
+    params.page && findPackage(query);
   }, [params]);
 
   return (
     <Flex vertical className="p-6" gap={24}>
       <Flex justify="space-between" align="center">
-        <SearchBox placeholder={t('Tìm kiếm theo tên')} onChange={(name) => onParams({ ...params, name })} value="" />
-        <Button type="primary" onClick={() => navigate(PATHNAME.PACKAGE.CREATE)}>{t("Thêm mới")}</Button>
+        <SearchBox placeholder={t("Tìm kiếm theo tên")} onChange={(name) => onParams({ ...params, name })} value="" />
+        <Button type="primary" onClick={() => navigate(PATHNAME.PACKAGE.CREATE)}>
+          {t("Thêm mới")}
+        </Button>
       </Flex>
-      <BoxTable data={data} columns={columns as any} isLoading={loading.find} />
+      <BoxTable data={data} columns={columns as any} isLoading={loading} />
     </Flex>
   );
 };

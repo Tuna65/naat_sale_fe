@@ -1,6 +1,6 @@
 import { ResPagination } from "@/models";
 import { IShop } from "@/models/shop";
-import { QueryShop, BodyUpPackage } from "@/types/shop";
+import { BodyUpPackage } from "@/types/shop";
 
 import { message } from "antd";
 import http from "./http";
@@ -8,9 +8,9 @@ import http from "./http";
 const path = `/shop` as const;
 
 export const shopApi = {
-  async find(params?: QueryShop): Promise<ResPagination<any> | any> {
+  async find(): Promise<ResPagination<any> | any> {
     try {
-      const res = await http.get(`${path}`, { params });
+      const res = await http.get(`${path}`);
       return res.data;
     } catch (error: any) {
       message.error(error?.data?.message ?? error?.data?.message[0]);
