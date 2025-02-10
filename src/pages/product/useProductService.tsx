@@ -1,25 +1,16 @@
-import { productApi } from "@/apis/product";
 import Text from "@/components/Text";
-import { SuccessFunc } from "@/models";
 import { IProduct } from "@/models/product";
-import { keyActions } from "@/store/modules/tanstackKey";
-import { keySelector } from "@/store/modules/tanstackKey/selector";
-import { IBaseLoading } from "@/types";
-import { baseLoading } from "@/utils";
 import { PATHNAME } from "@/utils/Pathname";
 import { func } from "@/utils/func";
 import { EditOutlined } from "@ant-design/icons";
-import { Button, Flex, Image, message } from "antd";
-import { useState } from "react";
+import { Button, Flex, Image } from "antd";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const useProductService = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const key = useSelector(keySelector);
+  
   const columns = [
     {
       title: t("Tên sản phẩm"),
@@ -51,7 +42,7 @@ const useProductService = () => {
       dataIndex: "sku",
       align: "center",
       key: "sku",
-      render: (sku: any, record: IProduct) => (
+      render: (sku: any, _record: IProduct) => (
         <Text type="BODY" className="group-hover:underline ">
           {sku}
         </Text>
@@ -62,7 +53,7 @@ const useProductService = () => {
       dataIndex: "barcode",
       align: "center",
       key: "barcode",
-      render: (barcode: any, record: IProduct) => (
+      render: (barcode: any, _record: IProduct) => (
         <Text type="BODY" className="group-hover:underline ">
           {barcode}
         </Text>
@@ -74,7 +65,7 @@ const useProductService = () => {
       align: "center",
       width: 200,
       key: "group",
-      render: (group: any, record: IProduct) => (
+      render: (group: any, _record: IProduct) => (
         <Text type="BODY" className="group-hover:underline ">
           {group ?? "---"}
         </Text>
@@ -86,7 +77,7 @@ const useProductService = () => {
       align: "right",
       width: 200,
       key: "price",
-      render: (price: any, record: IProduct) => (
+      render: (price: any, _record: IProduct) => (
         <Text type="BODY" className="group-hover:underline ">
           {func.numberWithDots(price, "")}
         </Text>
@@ -98,9 +89,9 @@ const useProductService = () => {
       align: "center",
       width: 200,
       key: "quantity",
-      render: (quantity: any, record: IProduct) => (
+      render: (_quantity: any, record: IProduct) => (
         <Text type="BODY" className="group-hover:underline ">
-          {func.numberWithDots(quantity, "")}
+          {func.numberWithDots(record.inventories?.[0].stock, "")}
         </Text>
       ),
     },
@@ -110,7 +101,7 @@ const useProductService = () => {
       width: 200,
       dataIndex: "key",
       align: "center",
-      render: (id: string, record: IProduct) => (
+      render: (_id: string, record: IProduct) => (
         <Flex className=" items-center justify-center">
           <Button type="text" icon={<EditOutlined />} onClick={() => navigate(PATHNAME.PRODUCT.EDIT_ID(record?.id))} />
         </Flex>

@@ -10,7 +10,6 @@ import LoginLayout from "./pages/auth";
 import CreateShop from "./pages/shop/CreateShop";
 import { configAntdProvider } from "./utils";
 import { PATHNAME } from "./utils/Pathname";
-import Test from "./pages/test";
 
 const queryClient = new QueryClient();
 function App() {
@@ -20,7 +19,6 @@ function App() {
         <ConfigProvider theme={configAntdProvider}>
           <Routes>
             <Route path="/" element={<Navigate replace to={PATHNAME.AUTH.LOGIN} />} />
-            <Route path={"/test"} element={<Test />} />
             <Route element={<LoginLayout />}>
               <Route path={PATHNAME.AUTH.LOGIN} element={<Login />} />
               <Route path={PATHNAME.AUTH.REGISTER} element={<Register />} />

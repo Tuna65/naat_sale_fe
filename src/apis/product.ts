@@ -35,7 +35,7 @@ export const productApi = {
     }
   },
 
-  async edit(body: any, id: string): Promise<any | any> {
+  async edit(id: string, body: any): Promise<any | any> {
     try {
       const res = await http.put(`${path}/${id}`, body);
       if (res.data.code) throw Error(res.data.message);

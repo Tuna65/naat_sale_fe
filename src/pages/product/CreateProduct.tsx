@@ -9,16 +9,23 @@ import { useNavigate } from "react-router-dom";
 import CImage from "./components/CImage";
 import CInventory from "./components/CInventory";
 import GeneralInfo from "./components/GeneralInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { keySelector } from "@/store/modules/tanstackKey/selector";
+import { keyActions } from "@/store/modules/tanstackKey";
+import { func } from "@/utils/func";
 
 const CreateProduct = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const key = useSelector(keySelector);
   const navigate = useNavigate();
 
   const { execute: createProduct, loading } = useAsync(productApi.create, {
     onSucess: (_response: any) => {
       message.success("Thêm mới sản phẩm thành công!");
       navigate(-1);
+      dispatch(keyActions.changeKey({ ...key, product: `product_${func.renderCode()}` }));
     },
     onFailed: (_error) => {},
   });

@@ -9,7 +9,7 @@ const LazyLayout = (importStatement: () => Promise<any>) => {
   return (
     <Suspense
       fallback={
-        <div className="flex-center h-full">
+        <div className="flex justify-center items-center h-full">
           <Spin size="large" />
         </div>
       }

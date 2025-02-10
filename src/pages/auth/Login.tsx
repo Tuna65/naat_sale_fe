@@ -25,9 +25,10 @@ const Login = () => {
 
   const { execute: login, loading } = useAsync(authSaleApi.login, {
     onSucess: (response: any) => {
-      dispatch(authActions.setUser(response.data));
+      console.log(response);
+      dispatch(authActions.setUser(response));
+      cookieStorageUtil.set(response.accessToken, STORAGE.NAAT_TOKEN_KEY);
       navigate(PATHNAME.DASHBOARD);
-      cookieStorageUtil.set(response.data.accessToken, STORAGE.NAAT_TOKEN_KEY);
     },
     onFailed: (_error) => {},
   });

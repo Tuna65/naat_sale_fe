@@ -30,7 +30,7 @@ const EditProduct = () => {
 
   const { execute: editProduct, loading } = useAsync(productApi.edit, {
     onSucess: (_response: any) => {
-      message.success("Thêm mới sản phẩm thành công!");
+      message.success("Chỉnh sửa sản phẩm thành công!");
       navigate(-1);
       dispatch(keyActions.changeKey({ ...key, product: `product_${func.renderCode()}` }));
     },
@@ -39,18 +39,19 @@ const EditProduct = () => {
 
   const { execute: detailProduct, loading: loadingDetail } = useAsync(productApi.detail, {
     onSucess: (response: any) => {
-      setDetailData(response.data);
+      setDetailData(response);
     },
     onFailed: (_error) => {},
   });
 
   const onFinish = (v: any) => {
-    editProduct(id ?? "", v);
+    editProduct(id as string, v);
   };
 
   useEffect(() => {
     id && detailProduct(id);
   }, [id]);
+
   return (
     <PageContainer
       actions={
@@ -80,7 +81,7 @@ const EditProduct = () => {
               <Flex vertical gap={12} className="p-4 bg-white shadow-box rounded-lg">
                 <Text type="TITLE3">{t("Quản lý kho")}</Text>
                 <Form.Item name={"inventories"}>
-                  <CInventory value={detailData.inventories} />
+                  <CInventory />
                 </Form.Item>
               </Flex>
             </Flex>

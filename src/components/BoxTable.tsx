@@ -1,7 +1,7 @@
 import { ResPagination } from "@/models";
 import { Skeleton, Table as TableAntd } from "antd";
 import { ColumnsType } from "antd/es/table";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Container from "./Container";
 import Nodata from "./Nodata";
@@ -28,23 +28,38 @@ const BoxTable = (props: ITableProps) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+
+  const dataTable = useMemo(() => {
+    const page = params.page ? Number(params.page) : 0;
+    const size = params.size ? Number(params.size) : 10;
+    const number = page * size + 1;
+    if (!data || data.items?.length === 0) return [];
+    const newData = data?.items?.map((d, idx) => ({
+      ...d,
+      no: number + idx,
+      key: `table-${idx}`,
+    }));
+    return newData;
+  }, [data, params.page, params.size]);
+
   return (
-    <div className="pb-4 bg-white shadow-box rounded-lg">
+    <div className=" bg-white shadow-box rounded-lg">
       <div className="border border-solid border-black border-opacity-10 rounded-lg overflow-hidden">
         <Container type="SPIN" isLoading={isLoading}>
           {!isSelectRow ? (
             <TableAntd
               columns={columns}
-              dataSource={data?.items}
+              dataSource={dataTable}
               locale={{
                 emptyText: <Nodata />,
               }}
               pagination={false}
+              bordered
             />
           ) : (
             <TableAntd
               columns={columns}
-              dataSource={data?.items}
+              dataSource={dataTable}
               locale={{
                 emptyText: <Nodata />,
               }}
@@ -53,16 +68,19 @@ const BoxTable = (props: ITableProps) => {
                 ...rowSelection,
               }}
               pagination={false}
+              bordered
             />
           )}
         </Container>
       </div>
-      <div className="flex justify-end mt-3">
-        <Pagination
-          onChange={(page, size) => onParams({ ...params, page, limit: size })}
-          metaData={data?.meta as any}
-        />
-      </div>
+      {!isLoading && (
+        <div className="flex justify-end mt-3 pb-4">
+          <Pagination
+            onChange={(page, size) => onParams({ ...params, page, limit: size })}
+            metaData={data?.meta as any}
+          />
+        </div>
+      )}
     </div>
   );
 };

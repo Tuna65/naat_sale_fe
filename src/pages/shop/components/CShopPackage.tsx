@@ -17,8 +17,7 @@ interface ICShopPackageProps {
 const CShopPackage = (props: ICShopPackageProps) => {
   const { shop } = props;
   const { t } = useTranslation();
-  const { findPackage } = usePackageService();
-  const { editShop, loading } = useShopService();
+  const { editShop } = useShopService();
 
   const [data, setData] = useState<ResPagination<IPackage>>(defaultResPage);
   const [value, setValue] = useState<string>(shop?.packageId ?? "");
@@ -70,7 +69,7 @@ const CShopPackage = (props: ICShopPackageProps) => {
   }, [data, value]);
 
   useEffect(() => {
-    findPackage({ page: 1, limit: 20 }, (v) => setData(v));
+    // findPackage({ page: 1, limit: 20 }, (v) => setData(v));
   }, []);
 
   const handleChangePackage = async (packageId: string) => {

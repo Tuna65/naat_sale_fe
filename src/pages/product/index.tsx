@@ -26,6 +26,7 @@ const Product = () => {
     enabled: !!Object.values(params)?.length,
     retry: 1,
   });
+  console.log(key.product);
 
   return (
     <ContainerTablePage

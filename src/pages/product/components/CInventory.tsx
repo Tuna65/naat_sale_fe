@@ -43,7 +43,7 @@ const CInventory = (props: Props) => {
 
   useEffect(() => {
     if (data) {
-      const listInventory = data?.items?.map((i: ILocation, idx: number) => {
+      const listInventory = data?.items?.map((i: ILocation, _idx: number) => {
         const data = value?.find((v) => v.locationId);
         const invent: IInventory = {
           locationId: i.id as string,
@@ -57,49 +57,44 @@ const CInventory = (props: Props) => {
     }
   }, [data, value]);
 
-  const getValue = (locationId: string, key: string) => {
-    const inven = inventories.find((i) => i.locationId == locationId);
-    // @ts-ignore
-    return inven[key];
-  };
-
   return (
-    <Row gutter={[24, 24]}>
-      {inventories?.map((i: IInventory, idx: number) => (
-        <Col span={6} key={`inventory-${idx}`}>
-          <Flex
-            className="border border-solid border-black border-opacity-20 px-2 py-4 rounded-lg"
-            align="center"
-            justify="center"
-            gap={12}
-            vertical
-          >
-            <Text type="TITLE3">{i.locationName}</Text>
-
-            <Flex gap={12}>
-              <Flex vertical gap={10}>
-                <Text type="BODY">{`Giá vốn`}</Text>
-                <NumbericInput
-                  onChange={(v) => onChangeInventory(i.locationId, "mac", v)}
-                  className="text-center"
-                  value={getValue(i.locationId, "mac")}
-                  disabled={disabled}
-                />
-              </Flex>
-              <Flex vertical gap={10}>
-                <Text type="BODY">{`Tồn kho`}</Text>
-                <NumbericInput
-                  className="text-center"
-                  value={getValue(i.locationId, "stock")}
-                  onChange={(v) => onChangeInventory(i.locationId, "stock", v)}
-                  disabled={disabled}
-                />
+    <div className="">
+      <Row gutter={[24, 24]}>
+        {inventories?.map((i: IInventory, idx: number) => (
+          <Col span={6} key={`inventory-${idx}`}>
+            <Flex
+              className="border border-solid border-black border-opacity-20 px-2 py-4 rounded-lg"
+              align="center"
+              justify="center"
+              gap={12}
+              vertical
+            >
+              <Text type="TITLE3">{i.locationName}</Text>
+              <Flex gap={12}>
+                {/* <Flex vertical gap={10}> */}
+                  <Text className="mb-2" type="BODY">{`Giá vốn:`}</Text>
+                  <NumbericInput
+                    onChange={(v) => onChangeInventory(i.locationId, "mac", v)}
+                    className="text-center"
+                    value={i.mac}
+                    disabled={disabled}
+                  />
+                {/* </Flex> */}
+                {/* <Flex vertical gap={10}> */}
+                  <Text className="mb-2" type="BODY">{`Tồn kho:`}</Text>
+                  <NumbericInput
+                    className="text-center"
+                    value={i.stock}
+                    onChange={(v) => onChangeInventory(i.locationId, "stock", v)}
+                    disabled={disabled}
+                  />
+                {/* </Flex> */}
               </Flex>
             </Flex>
-          </Flex>
-        </Col>
-      ))}
-    </Row>
+          </Col>
+        ))}
+      </Row>
+    </div>
   );
 };
 

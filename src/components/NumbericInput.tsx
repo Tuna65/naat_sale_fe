@@ -14,6 +14,7 @@ type Props = {
 
 const NumbericInput = (props: Props) => {
   const { onChange, value, className, placeholder, size, disabled } = props;
+  
   return (
     <div>
       <Input

@@ -13,8 +13,7 @@ export const galleryAPI = {
   },
 
   async upload(body: { file: any }): Promise<IGallery> {
-    const url = "https://adminapi.saffia.vn/api/gallery/upload";
-    const dev_url = "http://45.118.146.133:8008/api/gallery/upload";
+    const url = "http://localhost:8065/gallery/upload";
     try {
       const res = await axios.post(url, body, {
         headers: {

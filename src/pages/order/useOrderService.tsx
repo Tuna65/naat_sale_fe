@@ -71,7 +71,7 @@ const useOrderService = () => {
       dataIndex: "lineItems",
       align: "center",
       key: "lineItems",
-      render: (lineItems: ILineItem[]) => <Text type="BODY">{lineItems.length ?? "---"}</Text>,
+      render: (lineItems: ILineItem[]) => <Text type="BODY">{lineItems?.length ?? "---"}</Text>,
     },
     {
       title: t("Tổng tiền hàng"),
@@ -79,8 +79,8 @@ const useOrderService = () => {
       align: "right",
       key: "lineItems",
       render: (lineItems: ILineItem[]) => {
-        const amount = lineItems.reduce((acc, item) => {
-          const total = item.price * item.quantity;
+        const amount = lineItems?.reduce((acc, item) => {
+          const total = item?.price * item?.quantity;
           return acc + total;
         }, 0);
         return (

@@ -1,6 +1,5 @@
-import { Skeleton, Spin } from "antd";
+import { Flex, Skeleton, Spin } from "antd";
 import React, { ReactNode, useMemo } from "react";
-import { TableLoading } from "./BoxTable";
 import Text from "./Text";
 
 interface IContainerProps {
@@ -22,8 +21,11 @@ const Container = (props: IContainerProps) => {
         return <Skeleton.Image active />;
       case "TABLE":
         return (
-          <div className="w-full py-2">
-            <TableLoading />
+          <div className="min-h-80 z-[999] absolute top-0 bottom-0 right-0 left-0 bg-black bg-opacity-25 flex justify-center items-center">
+            <Flex align="center" className="bg-black relative z-10 p-4 rounded-lg bg-opacity-40" gap={12}>
+              <Spin size="small" style={{ color: "#fff" }}/>
+              <p className="text-white">{"Loading ..."}</p>
+            </Flex>
           </div>
         );
       case "NODE":
@@ -55,7 +57,20 @@ const Container = (props: IContainerProps) => {
     }
   }, [type]);
 
-  return <div>{isLoading ? loadingSkeleton : <div className="">{children}</div>}</div>;
+  return (
+    <div>
+      {type === "TABLE" ? (
+        <div className="relative ">
+          {isLoading && loadingSkeleton}
+          {children}
+        </div>
+      ) : isLoading ? (
+        loadingSkeleton
+      ) : (
+        <div className="">{children}</div>
+      )}
+    </div>
+  );
 };
 
 export default React.memo(Container);
